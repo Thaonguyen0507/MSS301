@@ -1,0 +1,49 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "product-service direct docs and Swagger UI",
+      "passed": true
+    },
+    {
+      "name": "product-service aggregate docs without JWT",
+      "passed": true
+    },
+    {
+      "name": "order-service direct docs and Swagger UI",
+      "passed": true
+    },
+    {
+      "name": "order-service aggregate docs without JWT",
+      "passed": true
+    },
+    {
+      "name": "inventory-service direct docs and Swagger UI",
+      "passed": true
+    },
+    {
+      "name": "inventory-service aggregate docs without JWT",
+      "passed": true
+    },
+    {
+      "name": "Gateway Swagger UI without JWT",
+      "passed": true
+    },
+    {
+      "name": "Dropdown includes all three services",
+      "passed": true
+    },
+    {
+      "name": "Product API still requires JWT",
+      "passed": true
+    },
+    {
+      "name": "Gateway CORS preflight allows Authorization",
+      "passed": true
+    },
+    {
+      "name": "Real Keycloak JWT can call Product API through Gateway",
+      "passed": true
+    }
+  ]
+}

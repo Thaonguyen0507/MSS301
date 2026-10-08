@@ -1,0 +1,82 @@
+{
+  "totals": {
+    "tests": 25,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "suites": [
+    {
+      "service": "product-service",
+      "name": "com.fudn.productservice.ProductServiceApplicationTests",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "service": "product-service",
+      "name": "com.fudn.productservice.SwaggerIntegrationTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "service": "inventory-service",
+      "name": "com.fudn.inventoryservice.InventoryServiceApplicationTests",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "service": "inventory-service",
+      "name": "com.fudn.inventoryservice.SwaggerIntegrationTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "service": "order-service",
+      "name": "com.fudn.orderservice.OrderServiceApplicationTests",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "service": "order-service",
+      "name": "com.fudn.orderservice.SwaggerIntegrationTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "service": "api-gateway",
+      "name": "com.fudn.gateway.ApiGatewayApplicationTests",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "service": "api-gateway",
+      "name": "com.fudn.gateway.ApiGatewaySecurityTests",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "service": "api-gateway",
+      "name": "com.fudn.gateway.SwaggerSecurityTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ]
+}
