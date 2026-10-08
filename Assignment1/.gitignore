@@ -1,0 +1,13 @@
+**/target/
+.maven/
+.tools/
+.docker/
+docker/
+node_modules/
+results/*.log
+*.pid
+
+results/services.json
+.idea/
+*.iml
+.vscode/
