@@ -1,0 +1,10 @@
+{
+  "name": "fu-cinema-tests",
+  "private": true,
+  "scripts": {
+    "test:api": "newman run postman/FUCinemaBookingSystem.postman_collection.json -e postman/FUCinema-Local.postman_environment.json --reporters cli,json,junit --reporter-json-export results/newman-results.json --reporter-junit-export results/newman-results.xml"
+  },
+  "devDependencies": {
+    "newman": "6.2.1"
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "info": {
+    "name": "FUCinema-BR14-Movie-Outage",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1.2 POST /api/auth/login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "auth": {
+          "type": "noauth"
+        },
+        "url": "{{gateway}}/api/auth/login",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"an@gmail.com\",\n  \"password\": \"123456\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+              "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+              "const json = pm.response.json();",
+              "pm.test(\"Role is CUSTOMER\", () => pm.expect(json.role).to.eql(\"CUSTOMER\"));",
+              "pm.test(\"userId = 1\", () => pm.expect(json.userId).to.eql(1));",
+              "pm.environment.set(\"customerToken\", json.accessToken);",
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "BR14 booking while Movie Service is stopped",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{customerToken}}",
+              "type": "string"
+            }
+          ]
+        },
+        "url": "{{gateway}}/api/bookings",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"items\":[{\"showtimeId\":\"66f300000000000000000001\",\"seatCode\":\"B2\"}]}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Movie outage returns 503\",()=>pm.response.to.have.status(503));",
+              "pm.test(\"Clear error message\",()=>pm.expect(pm.response.json().message).to.include(\"unavailable\"));"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
