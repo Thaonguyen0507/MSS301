@@ -1,0 +1,11 @@
+target/
+.idea/
+*.iml
+.DS_Store
+docker/
+
+results/*.log
+results/services.json
+.tools/
+
+volume-data/
