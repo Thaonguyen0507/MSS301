@@ -1,0 +1,26 @@
+{
+  "mode": "concurrency",
+  "passed": true,
+  "checks": [
+    {
+      "name": "BR09: concurrent booking of the same seat",
+      "statuses": [
+        409,
+        201
+      ],
+      "passed": true
+    },
+    {
+      "name": "Only one confirmed ticket persisted",
+      "passed": true
+    },
+    {
+      "name": "Revenue grouping and descending order across multiple movies",
+      "passed": true
+    },
+    {
+      "name": "Unique index releases cancelled seats",
+      "passed": true
+    }
+  ]
+}

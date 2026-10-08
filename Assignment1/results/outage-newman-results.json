@@ -1,0 +1,1055 @@
+{
+  "collection": {
+    "item": [
+      {
+        "id": "49b79b1e-75f3-46a0-8000-2d5a2fbe86e5",
+        "name": "1.2 POST /api/auth/login",
+        "request": {
+          "url": {
+            "path": [
+              "api",
+              "auth",
+              "login"
+            ],
+            "host": [
+              "{{gateway}}"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"email\": \"an@gmail.com\",\n  \"password\": \"123456\"\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "auth": {
+            "type": "noauth",
+            "noauth": []
+          }
+        },
+        "response": [],
+        "event": [
+          {
+            "listen": "test",
+            "script": {
+              "id": "7a24d617-b97d-41f4-9891-149d761bd885",
+              "type": "text/javascript",
+              "exec": [
+                "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                "const json = pm.response.json();",
+                "pm.test(\"Role is CUSTOMER\", () => pm.expect(json.role).to.eql(\"CUSTOMER\"));",
+                "pm.test(\"userId = 1\", () => pm.expect(json.userId).to.eql(1));",
+                "pm.environment.set(\"customerToken\", json.accessToken);",
+                ""
+              ],
+              "_lastExecutionId": "c3c66b76-17bb-44d5-a1cb-15bea8df827a"
+            }
+          }
+        ]
+      },
+      {
+        "id": "0c71b355-c9cd-49c7-beb2-17ed5d4a5103",
+        "name": "BR14 booking while Movie Service is stopped",
+        "request": {
+          "url": {
+            "path": [
+              "api",
+              "bookings"
+            ],
+            "host": [
+              "{{gateway}}"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\"items\":[{\"showtimeId\":\"66f300000000000000000001\",\"seatCode\":\"B2\"}]}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "type": "string",
+                "value": "{{customerToken}}",
+                "key": "token"
+              }
+            ]
+          }
+        },
+        "response": [],
+        "event": [
+          {
+            "listen": "test",
+            "script": {
+              "id": "501ebecb-1d79-4cbf-9281-b6a851619422",
+              "type": "text/javascript",
+              "exec": [
+                "pm.test(\"Movie outage returns 503\",()=>pm.response.to.have.status(503));",
+                "pm.test(\"Clear error message\",()=>pm.expect(pm.response.json().message).to.include(\"unavailable\"));"
+              ],
+              "_lastExecutionId": "c6be5525-8810-4017-ba66-e8bdef1289b8"
+            }
+          }
+        ]
+      }
+    ],
+    "event": [],
+    "variable": [],
+    "info": {
+      "_postman_id": "ba438e80-9470-493c-8287-76e8cda3eaf8",
+      "name": "FUCinema-BR14-Movie-Outage",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    }
+  },
+  "environment": {
+    "_": {
+      "postman_variable_scope": "environment"
+    },
+    "id": "261957b3-7582-4a44-ae68-3eafb18dc351",
+    "name": "FUCinema-Local",
+    "values": [
+      {
+        "type": "any",
+        "value": "http://localhost:9000",
+        "key": "gateway"
+      },
+      {
+        "type": "any",
+        "value": "66f9ffffffffffffffffffff",
+        "key": "notFoundId"
+      },
+      {
+        "type": "any",
+        "value": "66f000000000000000000001",
+        "key": "seedGenreActionId"
+      },
+      {
+        "type": "any",
+        "value": "66f000000000000000000005",
+        "key": "seedGenreScifiId"
+      },
+      {
+        "type": "any",
+        "value": "66f100000000000000000002",
+        "key": "seedRoom2Id"
+      },
+      {
+        "type": "any",
+        "value": "66f100000000000000000004",
+        "key": "seedRoomMaintenanceId"
+      },
+      {
+        "type": "any",
+        "value": "66f200000000000000000004",
+        "key": "seedMovieEndedId"
+      },
+      {
+        "type": "any",
+        "value": "[REDACTED_LOCAL_TEST_TOKEN]",
+        "key": "expiredToken"
+      },
+      {
+        "type": "any",
+        "value": "[REDACTED_LOCAL_TEST_TOKEN]",
+        "key": "customerToken"
+      }
+    ]
+  },
+  "globals": {
+    "id": "de477df2-e468-4bdf-ad5e-39c8acf3fb68",
+    "values": []
+  },
+  "run": {
+    "stats": {
+      "iterations": {
+        "total": 1,
+        "pending": 0,
+        "failed": 0
+      },
+      "items": {
+        "total": 2,
+        "pending": 0,
+        "failed": 0
+      },
+      "scripts": {
+        "total": 2,
+        "pending": 0,
+        "failed": 0
+      },
+      "prerequests": {
+        "total": 2,
+        "pending": 0,
+        "failed": 0
+      },
+      "requests": {
+        "total": 2,
+        "pending": 0,
+        "failed": 0
+      },
+      "tests": {
+        "total": 2,
+        "pending": 0,
+        "failed": 0
+      },
+      "assertions": {
+        "total": 6,
+        "pending": 0,
+        "failed": 0
+      },
+      "testScripts": {
+        "total": 2,
+        "pending": 0,
+        "failed": 0
+      },
+      "prerequestScripts": {
+        "total": 0,
+        "pending": 0,
+        "failed": 0
+      }
+    },
+    "timings": {
+      "responseAverage": 166,
+      "responseMin": 46,
+      "responseMax": 286,
+      "responseSd": 120,
+      "dnsAverage": 0,
+      "dnsMin": 0,
+      "dnsMax": 0,
+      "dnsSd": 0,
+      "firstByteAverage": 0,
+      "firstByteMin": 0,
+      "firstByteMax": 0,
+      "firstByteSd": 0,
+      "started": 1791465700542,
+      "completed": 1791465701073
+    },
+    "executions": [
+      {
+        "cursor": {
+          "position": 0,
+          "iteration": 0,
+          "length": 2,
+          "cycles": 1,
+          "empty": false,
+          "eof": false,
+          "bof": true,
+          "cr": false,
+          "ref": "abaea85f-60be-483c-8633-ace234a3fbfe",
+          "httpRequestId": "c6982809-0508-4cb8-8302-1da7d8af851d"
+        },
+        "item": {
+          "id": "49b79b1e-75f3-46a0-8000-2d5a2fbe86e5",
+          "name": "1.2 POST /api/auth/login",
+          "request": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ],
+              "host": [
+                "{{gateway}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"an@gmail.com\",\n  \"password\": \"123456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth",
+              "noauth": []
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "7a24d617-b97d-41f4-9891-149d761bd885",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "const json = pm.response.json();",
+                  "pm.test(\"Role is CUSTOMER\", () => pm.expect(json.role).to.eql(\"CUSTOMER\"));",
+                  "pm.test(\"userId = 1\", () => pm.expect(json.userId).to.eql(1));",
+                  "pm.environment.set(\"customerToken\", json.accessToken);",
+                  ""
+                ],
+                "_lastExecutionId": "c3c66b76-17bb-44d5-a1cb-15bea8df827a"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "9000",
+            "path": [
+              "api",
+              "auth",
+              "login"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "a613f23a-d83f-4c55-a2ea-54777513c580",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:9000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "53",
+              "system": true
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"email\": \"an@gmail.com\",\n  \"password\": \"123456\"\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "auth": {
+            "type": "noauth",
+            "noauth": []
+          }
+        },
+        "response": {
+          "id": "9e06ac1b-ddbd-405f-8fb5-2b3f8a1a7cf5",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "date",
+              "value": "Thu, 08 Oct 2026 13:21:40 GMT"
+            },
+            {
+              "key": "X-Content-Type-Options",
+              "value": "nosniff"
+            },
+            {
+              "key": "X-XSS-Protection",
+              "value": "0"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, no-store, max-age=0, must-revalidate"
+            },
+            {
+              "key": "Pragma",
+              "value": "no-cache"
+            },
+            {
+              "key": "Expires",
+              "value": "0"
+            },
+            {
+              "key": "X-Frame-Options",
+              "value": "DENY"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Content-Length",
+              "value": "347"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              97,
+              99,
+              99,
+              101,
+              115,
+              115,
+              84,
+              111,
+              107,
+              101,
+              110,
+              34,
+              58,
+              34,
+              91,
+              82,
+              69,
+              68,
+              65,
+              67,
+              84,
+              69,
+              68,
+              95,
+              76,
+              79,
+              67,
+              65,
+              76,
+              95,
+              84,
+              69,
+              83,
+              84,
+              95,
+              84,
+              79,
+              75,
+              69,
+              78,
+              93,
+              34,
+              44,
+              34,
+              116,
+              111,
+              107,
+              101,
+              110,
+              84,
+              121,
+              112,
+              101,
+              34,
+              58,
+              34,
+              66,
+              101,
+              97,
+              114,
+              101,
+              114,
+              34,
+              44,
+              34,
+              101,
+              120,
+              112,
+              105,
+              114,
+              101,
+              115,
+              73,
+              110,
+              34,
+              58,
+              51,
+              54,
+              48,
+              48,
+              44,
+              34,
+              114,
+              111,
+              108,
+              101,
+              34,
+              58,
+              34,
+              67,
+              85,
+              83,
+              84,
+              79,
+              77,
+              69,
+              82,
+              34,
+              44,
+              34,
+              117,
+              115,
+              101,
+              114,
+              73,
+              100,
+              34,
+              58,
+              49,
+              44,
+              34,
+              101,
+              109,
+              97,
+              105,
+              108,
+              34,
+              58,
+              34,
+              97,
+              110,
+              64,
+              103,
+              109,
+              97,
+              105,
+              108,
+              46,
+              99,
+              111,
+              109,
+              34,
+              44,
+              34,
+              102,
+              117,
+              108,
+              108,
+              78,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              78,
+              103,
+              117,
+              121,
+              225,
+              187,
+              133,
+              110,
+              32,
+              86,
+              196,
+              131,
+              110,
+              32,
+              65,
+              110,
+              32,
+              40,
+              117,
+              112,
+              100,
+              97,
+              116,
+              101,
+              100,
+              41,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 286,
+          "responseSize": 347
+        },
+        "id": "49b79b1e-75f3-46a0-8000-2d5a2fbe86e5",
+        "assertions": [
+          {
+            "assertion": "Status 200",
+            "skipped": false
+          },
+          {
+            "assertion": "Status 200",
+            "skipped": false
+          },
+          {
+            "assertion": "Role is CUSTOMER",
+            "skipped": false
+          },
+          {
+            "assertion": "userId = 1",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "9aa2a68f-3e97-4af5-9c29-091da493a1fc",
+          "length": 2,
+          "cycles": 1,
+          "position": 1,
+          "iteration": 0,
+          "httpRequestId": "66639775-4eaf-4be1-9bcc-a91c4ead7362"
+        },
+        "item": {
+          "id": "0c71b355-c9cd-49c7-beb2-17ed5d4a5103",
+          "name": "BR14 booking while Movie Service is stopped",
+          "request": {
+            "url": {
+              "path": [
+                "api",
+                "bookings"
+              ],
+              "host": [
+                "{{gateway}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"items\":[{\"showtimeId\":\"66f300000000000000000001\",\"seatCode\":\"B2\"}]}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "type": "string",
+                  "value": "{{customerToken}}",
+                  "key": "token"
+                }
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "501ebecb-1d79-4cbf-9281-b6a851619422",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Movie outage returns 503\",()=>pm.response.to.have.status(503));",
+                  "pm.test(\"Clear error message\",()=>pm.expect(pm.response.json().message).to.include(\"unavailable\"));"
+                ],
+                "_lastExecutionId": "c6be5525-8810-4017-ba66-e8bdef1289b8"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "9000",
+            "path": [
+              "api",
+              "bookings"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Authorization",
+              "value": "Bearer [REDACTED_LOCAL_TEST_TOKEN]",
+              "system": true
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "0d811281-88a8-4aeb-8b16-eb0e2231bfc9",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:9000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "69",
+              "system": true
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\"items\":[{\"showtimeId\":\"66f300000000000000000001\",\"seatCode\":\"B2\"}]}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "type": "string",
+                "value": "[REDACTED_LOCAL_TEST_TOKEN]",
+                "key": "token"
+              }
+            ]
+          }
+        },
+        "response": {
+          "id": "a890af16-ad03-46bf-bac3-116bd19c0694",
+          "status": "Service Unavailable",
+          "code": 503,
+          "header": [
+            {
+              "key": "date",
+              "value": "Thu, 08 Oct 2026 13:21:41 GMT"
+            },
+            {
+              "key": "X-Content-Type-Options",
+              "value": "nosniff"
+            },
+            {
+              "key": "X-XSS-Protection",
+              "value": "0"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, no-store, max-age=0, must-revalidate"
+            },
+            {
+              "key": "Pragma",
+              "value": "no-cache"
+            },
+            {
+              "key": "Expires",
+              "value": "0"
+            },
+            {
+              "key": "X-Frame-Options",
+              "value": "DENY"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Connection",
+              "value": "close"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              116,
+              105,
+              109,
+              101,
+              115,
+              116,
+              97,
+              109,
+              112,
+              34,
+              58,
+              34,
+              50,
+              48,
+              50,
+              54,
+              45,
+              49,
+              48,
+              45,
+              48,
+              56,
+              84,
+              50,
+              48,
+              58,
+              50,
+              49,
+              58,
+              52,
+              49,
+              46,
+              48,
+              51,
+              55,
+              48,
+              56,
+              55,
+              50,
+              34,
+              44,
+              34,
+              115,
+              116,
+              97,
+              116,
+              117,
+              115,
+              34,
+              58,
+              53,
+              48,
+              51,
+              44,
+              34,
+              101,
+              114,
+              114,
+              111,
+              114,
+              34,
+              58,
+              34,
+              83,
+              101,
+              114,
+              118,
+              105,
+              99,
+              101,
+              32,
+              85,
+              110,
+              97,
+              118,
+              97,
+              105,
+              108,
+              97,
+              98,
+              108,
+              101,
+              34,
+              44,
+              34,
+              109,
+              101,
+              115,
+              115,
+              97,
+              103,
+              101,
+              34,
+              58,
+              34,
+              77,
+              111,
+              118,
+              105,
+              101,
+              32,
+              115,
+              101,
+              114,
+              118,
+              105,
+              99,
+              101,
+              32,
+              105,
+              115,
+              32,
+              117,
+              110,
+              97,
+              118,
+              97,
+              105,
+              108,
+              97,
+              98,
+              108,
+              101,
+              46,
+              32,
+              80,
+              108,
+              101,
+              97,
+              115,
+              101,
+              32,
+              116,
+              114,
+              121,
+              32,
+              97,
+              103,
+              97,
+              105,
+              110,
+              32,
+              108,
+              97,
+              116,
+              101,
+              114,
+              46,
+              34,
+              44,
+              34,
+              112,
+              97,
+              116,
+              104,
+              34,
+              58,
+              34,
+              47,
+              97,
+              112,
+              105,
+              47,
+              98,
+              111,
+              111,
+              107,
+              105,
+              110,
+              103,
+              115,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 46,
+          "responseSize": 175
+        },
+        "id": "0c71b355-c9cd-49c7-beb2-17ed5d4a5103",
+        "assertions": [
+          {
+            "assertion": "Movie outage returns 503",
+            "skipped": false
+          },
+          {
+            "assertion": "Clear error message",
+            "skipped": false
+          }
+        ]
+      }
+    ],
+    "transfers": {
+      "responseTotal": 522
+    },
+    "failures": [],
+    "error": null
+  }
+}

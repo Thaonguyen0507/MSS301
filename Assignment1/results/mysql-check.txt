@@ -1,0 +1,8 @@
+﻿version	description	success
+1	init	1
+2	seat uniqueness	1
+Table	Create Table
+booking_detail	CREATE TABLE `booking_detail` (\n  `booking_detail_id` bigint NOT NULL AUTO_INCREMENT,\n  `booking_id` bigint NOT NULL,\n  `showtime_id` varchar(24) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `seat_code` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `price` decimal(10,2) NOT NULL,\n  `movie_id` varchar(24) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `movie_title` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `room_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `showtime_start` datetime NOT NULL,\n  `active` tinyint(1) NOT NULL DEFAULT '1',\n  `active_seat` varchar(5) COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS ((case when `active` then `seat_code` else NULL end)) STORED,\n  PRIMARY KEY (`booking_detail_id`),\n  UNIQUE KEY `uk_confirmed_seat` (`showtime_id`,`active_seat`),\n  KEY `fk_detail_booking` (`booking_id`),\n  KEY `idx_detail_showtime_seat` (`showtime_id`,`seat_code`),\n  CONSTRAINT `fk_detail_booking` FOREIGN KEY (`booking_id`) REFERENCES `booking` (`booking_id`)\n) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+booking_status	bookings
+CONFIRMED	2
+CANCELLED	4

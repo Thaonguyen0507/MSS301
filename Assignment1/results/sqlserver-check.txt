@@ -1,0 +1,32 @@
+﻿name                                                                                                                            
+--------------------------------------------------------------------------------------------------------------------------------
+cinema_customer                                                                                                                 
+
+(1 rows affected)
+Changed database context to 'cinema_customer'.
+version                                            description                                                                                                                                                                                              success
+-------------------------------------------------- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------
+1                                                  init                                                                                                                                                                                                           1
+2                                                  seed                                                                                                                                                                                                           1
+
+(2 rows affected)
+customer_id          customer_name                                                                                        email                                                                                                customer_status     
+-------------------- ---------------------------------------------------------------------------------------------------- ---------------------------------------------------------------------------------------------------- --------------------
+                   1 Nguyễn Văn An (updated)                                                                              an@gmail.com                                                                                         ACTIVE              
+                   2 Trần Thị Bình                                                                                        binh@gmail.com                                                                                       ACTIVE              
+                   3 Lê Minh Chi                                                                                          chi@gmail.com                                                                                        INACTIVE            
+                   4 Phạm Thị Dung                                                                                        user1791465587619@gmail.com                                                                          ACTIVE              
+                   5 Khách hàng cập nhật                                                                                  staff1791465590762@gmail.com                                                                         INACTIVE            
+
+(5 rows affected)
+COLUMN_NAME                                                                                                                      DATA_TYPE                                                                                                                       
+-------------------------------------------------------------------------------------------------------------------------------- --------------------------------------------------------------------------------------------------------------------------------
+customer_id                                                                                                                      bigint                                                                                                                          
+customer_name                                                                                                                    nvarchar                                                                                                                        
+telephone                                                                                                                        varchar                                                                                                                         
+email                                                                                                                            varchar                                                                                                                         
+customer_birthday                                                                                                                date                                                                                                                            
+customer_status                                                                                                                  varchar                                                                                                                         
+password                                                                                                                         varchar                                                                                                                         
+
+(7 rows affected)

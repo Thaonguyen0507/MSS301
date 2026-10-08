@@ -1,0 +1,1 @@
+﻿PASS: MongoDB counts and indexes unchanged after restart

@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="FUCinemaBookingSystem" tests="108" time="12.091">
+  <testsuite name="01-Auth / 1.1 POST /api/auth/login" id="b2fdf6e4-c82e-47d6-a203-fbc5f487bda9" timestamp="2026-10-08T13:19:44.118Z" tests="4" failures="0" errors="0" time="0.080">
+    <testcase name="Status 200" time="0.080" classname="01Auth11PostApiAuthLogin"/>
+    <testcase name="Role is ADMIN" time="0.080" classname="01Auth11PostApiAuthLogin"/>
+    <testcase name="Has Bearer token" time="0.080" classname="01Auth11PostApiAuthLogin"/>
+  </testsuite>
+  <testsuite name="01-Auth / 1.2 POST /api/auth/login" id="b979415a-5e61-46e9-9a5e-2b23ff7ba63b" timestamp="2026-10-08T13:19:44.118Z" tests="4" failures="0" errors="0" time="1.806">
+    <testcase name="Status 200" time="1.806" classname="01Auth12PostApiAuthLogin"/>
+    <testcase name="Role is CUSTOMER" time="1.806" classname="01Auth12PostApiAuthLogin"/>
+    <testcase name="userId = 1" time="1.806" classname="01Auth12PostApiAuthLogin"/>
+  </testsuite>
+  <testsuite name="01-Auth / 1.3 POST /api/auth/login" id="f2edcdb2-c358-4534-bb68-716c405aebbc" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.269">
+    <testcase name="Status 401" time="0.269" classname="01Auth13PostApiAuthLogin"/>
+    <testcase name="Unified error" time="0.269" classname="01Auth13PostApiAuthLogin"/>
+  </testsuite>
+  <testsuite name="01-Auth / 1.4 POST /api/auth/login" id="18422946-56cf-465d-bbad-054cd06cc4a8" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.213">
+    <testcase name="Status 403" time="0.213" classname="01Auth14PostApiAuthLogin"/>
+    <testcase name="Unified error" time="0.213" classname="01Auth14PostApiAuthLogin"/>
+  </testsuite>
+  <testsuite name="01-Auth / 1.5 POST /api/auth/login" id="dd57b9ec-8779-4f47-baae-31eb0ec03287" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.063">
+    <testcase name="Status 400" time="0.063" classname="01Auth15PostApiAuthLogin"/>
+    <testcase name="Unified error" time="0.063" classname="01Auth15PostApiAuthLogin"/>
+  </testsuite>
+  <testsuite name="01-Auth / 1.6 GET /api/customers/me" id="c56b0e15-6081-4c1f-a6a5-e7284c51ef3f" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.081">
+    <testcase name="Status 401" time="0.081" classname="01Auth16GetApiCustomersMe"/>
+    <testcase name="Unified error" time="0.081" classname="01Auth16GetApiCustomersMe"/>
+  </testsuite>
+  <testsuite name="01-Auth / 1.7 GET /api/customers/me" id="243c533d-9272-4300-a3cc-5c9939c3adfe" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.108">
+    <testcase name="Status 401" time="0.108" classname="01Auth17GetApiCustomersMe"/>
+    <testcase name="Unified error" time="0.108" classname="01Auth17GetApiCustomersMe"/>
+  </testsuite>
+  <testsuite name="01-Auth / 1.8 GET /api/customers/me" id="69486d73-5682-4fac-854b-c18eb79e57a3" timestamp="2026-10-08T13:19:44.118Z" tests="1" failures="0" errors="0" time="0.086">
+    <testcase name="Status 401" time="0.086" classname="01Auth18GetApiCustomersMe"/>
+  </testsuite>
+  <testsuite name="01-Auth / 1.9 GET /api/customers/me" id="38dca3b6-e1e0-4d6d-b46b-c41a491ba6e8" timestamp="2026-10-08T13:19:44.118Z" tests="1" failures="0" errors="0" time="0.017">
+    <testcase name="Status 401" time="0.017" classname="01Auth19GetApiCustomersMe"/>
+  </testsuite>
+  <testsuite name="02-Customer / 2.1 POST /api/customers/register" id="113b9204-2261-4237-b388-bb1400f79b58" timestamp="2026-10-08T13:19:44.118Z" tests="4" failures="0" errors="0" time="0.522">
+    <testcase name="Status 201" time="0.522" classname="02Customer21PostApiCustomersRegister"/>
+    <testcase name="Status ACTIVE" time="0.522" classname="02Customer21PostApiCustomersRegister"/>
+    <testcase name="Password is NOT returned" time="0.522" classname="02Customer21PostApiCustomersRegister"/>
+  </testsuite>
+  <testsuite name="02-Customer / 2.2 POST /api/customers/register" id="07efe192-0e6f-4604-b297-d36a114691cc" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.077">
+    <testcase name="Status 409" time="0.077" classname="02Customer22PostApiCustomersRegister"/>
+    <testcase name="Unified error" time="0.077" classname="02Customer22PostApiCustomersRegister"/>
+  </testsuite>
+  <testsuite name="02-Customer / 2.3 POST /api/customers/register" id="90af4c9a-4a0a-4e1e-9bee-e0d407280ebe" timestamp="2026-10-08T13:19:44.118Z" tests="8" failures="0" errors="0" time="0.049">
+    <testcase name="Status 400" time="0.049" classname="02Customer23PostApiCustomersRegister"/>
+    <testcase name="Message mentions customerName" time="0.049" classname="02Customer23PostApiCustomersRegister"/>
+    <testcase name="Message mentions telephone" time="0.049" classname="02Customer23PostApiCustomersRegister"/>
+    <testcase name="Message mentions email" time="0.049" classname="02Customer23PostApiCustomersRegister"/>
+    <testcase name="Message mentions customerBirthday" time="0.049" classname="02Customer23PostApiCustomersRegister"/>
+    <testcase name="Message mentions password" time="0.049" classname="02Customer23PostApiCustomersRegister"/>
+    <testcase name="Unified error" time="0.049" classname="02Customer23PostApiCustomersRegister"/>
+  </testsuite>
+  <testsuite name="02-Customer / 2.4 POST /api/auth/login" id="a4d5fa9a-572a-4b38-836c-3c99f3356a13" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.210">
+    <testcase name="Status 200" time="0.210" classname="02Customer24PostApiAuthLogin"/>
+  </testsuite>
+  <testsuite name="02-Customer / 2.5 GET /api/customers/me" id="5fe8e872-30d6-4fb2-a90b-c7f4f99045e6" timestamp="2026-10-08T13:19:44.118Z" tests="1" failures="0" errors="0" time="0.091">
+    <testcase name="Status 200" time="0.091" classname="02Customer25GetApiCustomersMe"/>
+  </testsuite>
+  <testsuite name="02-Customer / 2.6 PUT /api/customers/me" id="9d0de673-ab78-4abd-8a1c-1c5d24a47b7e" timestamp="2026-10-08T13:19:44.118Z" tests="3" failures="0" errors="0" time="0.128">
+    <testcase name="Status 200" time="0.128" classname="02Customer26PutApiCustomersMe"/>
+    <testcase name="Profile updated" time="0.128" classname="02Customer26PutApiCustomersMe"/>
+  </testsuite>
+  <testsuite name="02-Customer / 2.7 PUT /api/customers/me/password" id="9cec97d2-a9d8-42ec-af36-f032a706f4d4" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.267">
+    <testcase name="Status 400" time="0.267" classname="02Customer27PutApiCustomersMePassword"/>
+    <testcase name="Unified error" time="0.267" classname="02Customer27PutApiCustomersMePassword"/>
+  </testsuite>
+  <testsuite name="02-Customer / 2.8 PUT /api/customers/me/password" id="c843e942-e3d0-40b8-ae91-ba6cfeaed0e8" timestamp="2026-10-08T13:19:44.118Z" tests="1" failures="0" errors="0" time="0.423">
+    <testcase name="Status 204" time="0.423" classname="02Customer28PutApiCustomersMePassword"/>
+  </testsuite>
+  <testsuite name="02-Customer / 2.9 POST /api/auth/login" id="4605595f-ef01-4ee4-83f6-b039639b381b" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.227">
+    <testcase name="Status 200" time="0.227" classname="02Customer29PostApiAuthLogin"/>
+  </testsuite>
+  <testsuite name="02-Customer / 2.10 GET /api/customers" id="b741d92f-7780-4081-9da0-2a07af6029e6" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.012">
+    <testcase name="Status 403" time="0.012" classname="02Customer210GetApiCustomers"/>
+    <testcase name="Unified error" time="0.012" classname="02Customer210GetApiCustomers"/>
+  </testsuite>
+  <testsuite name="02-Customer / 2.11 GET /api/customers?keyword=gmail" id="838c7a78-9699-4658-b568-47bf60aef3d7" timestamp="2026-10-08T13:19:44.118Z" tests="4" failures="0" errors="0" time="0.182">
+    <testcase name="Status 200" time="0.182" classname="02Customer211GetApiCustomersKeywordGmail"/>
+    <testcase name="At least 3 customers" time="0.182" classname="02Customer211GetApiCustomersKeywordGmail"/>
+    <testcase name="No password in list" time="0.182" classname="02Customer211GetApiCustomersKeywordGmail"/>
+  </testsuite>
+  <testsuite name="02-Customer / 2.12 GET /api/customers/99999" id="90c52f11-db94-4494-be19-3fc61d805b9a" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.056">
+    <testcase name="Status 404" time="0.056" classname="02Customer212GetApiCustomers99999"/>
+    <testcase name="Unified error" time="0.056" classname="02Customer212GetApiCustomers99999"/>
+  </testsuite>
+  <testsuite name="02-Customer / 2.13 POST /api/customers" id="fba04d22-0150-407b-bb7c-f0325f539388" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.288">
+    <testcase name="Status 201" time="0.288" classname="02Customer213PostApiCustomers"/>
+  </testsuite>
+  <testsuite name="02-Customer / 2.14 PUT /api/customers/{{adminCreatedId}}" id="305e4440-c55d-4879-b113-a19f3885a102" timestamp="2026-10-08T13:19:44.118Z" tests="1" failures="0" errors="0" time="0.127">
+    <testcase name="Status 200" time="0.127" classname="02Customer214PutApiCustomersAdminCreatedId"/>
+  </testsuite>
+  <testsuite name="02-Customer / 2.15 DELETE /api/customers/{{adminCreatedId}}" id="ee41e623-3d07-446f-9e05-aeca4dd2b991" timestamp="2026-10-08T13:19:44.118Z" tests="1" failures="0" errors="0" time="0.152">
+    <testcase name="Status 204" time="0.152" classname="02Customer215DeleteApiCustomersAdminCreatedId"/>
+  </testsuite>
+  <testsuite name="02-Customer / 2.16 GET /api/customers/{{adminCreatedId}}" id="48e94755-f674-4209-bfdd-cceb64c5e9da" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.036">
+    <testcase name="Status 200" time="0.036" classname="02Customer216GetApiCustomersAdminCreatedId"/>
+    <testcase name="Soft deleted -> INACTIVE" time="0.036" classname="02Customer216GetApiCustomersAdminCreatedId"/>
+  </testsuite>
+  <testsuite name="02-Customer / 2.17 GET /api/customers/me" id="eb71fdea-47d5-4161-8636-e4997dcff469" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.009">
+    <testcase name="Status 403" time="0.009" classname="02Customer217GetApiCustomersMe"/>
+    <testcase name="Unified error" time="0.009" classname="02Customer217GetApiCustomersMe"/>
+  </testsuite>
+  <testsuite name="02-Customer / 2.18 GET /api/customers/me" id="fd9cfc53-333a-46fe-96f2-66d47b97b64b" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.050">
+    <testcase name="Status 200" time="0.050" classname="02Customer218GetApiCustomersMe"/>
+    <testcase name="Gateway overrides spoofed X-User-Id" time="0.050" classname="02Customer218GetApiCustomersMe"/>
+  </testsuite>
+  <testsuite name="02-Customer / 2.19 GET /api/customers/me" id="e2920df9-caaa-4eef-a9c7-8b729aadaa73" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.044">
+    <testcase name="Status 200" time="0.044" classname="02Customer219GetApiCustomersMe"/>
+    <testcase name="Unicode persisted" time="0.044" classname="02Customer219GetApiCustomersMe"/>
+  </testsuite>
+  <testsuite name="02-Customer / 2.20 POST /api/customers/register" id="af5f3d37-df74-428e-ab55-0f80e3d6a978" timestamp="2026-10-08T13:19:44.118Z" tests="1" failures="0" errors="0" time="0.047">
+    <testcase name="Status 409" time="0.047" classname="02Customer220PostApiCustomersRegister"/>
+  </testsuite>
+  <testsuite name="03-Genre-Room / 3.1 GET /api/genres" id="e63f5f70-af84-42b3-8a39-ab02cdb5fb2f" timestamp="2026-10-08T13:19:44.118Z" tests="1" failures="0" errors="0" time="0.057">
+    <testcase name="Status 200" time="0.057" classname="03GenreRoom31GetApiGenres"/>
+  </testsuite>
+  <testsuite name="03-Genre-Room / 3.2 POST /api/genres" id="dab03cb7-9ffe-4d40-80bc-bf7df274a5b3" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.450">
+    <testcase name="Status 201" time="0.450" classname="03GenreRoom32PostApiGenres"/>
+  </testsuite>
+  <testsuite name="03-Genre-Room / 3.3 POST /api/genres" id="bf1f22af-afd8-441f-8665-b22986e10a98" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.014">
+    <testcase name="Status 403" time="0.014" classname="03GenreRoom33PostApiGenres"/>
+    <testcase name="Unified error" time="0.014" classname="03GenreRoom33PostApiGenres"/>
+  </testsuite>
+  <testsuite name="03-Genre-Room / 3.4 POST /api/genres" id="7995beea-c897-44d1-bc6b-236440a5c002" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.064">
+    <testcase name="Status 409" time="0.064" classname="03GenreRoom34PostApiGenres"/>
+    <testcase name="Unified error" time="0.064" classname="03GenreRoom34PostApiGenres"/>
+  </testsuite>
+  <testsuite name="03-Genre-Room / 3.5 PUT /api/genres/{{genreId}}" id="81f74259-cbcb-42e4-be2f-7d5d9a5b43a0" timestamp="2026-10-08T13:19:44.118Z" tests="1" failures="0" errors="0" time="0.121">
+    <testcase name="Status 200" time="0.121" classname="03GenreRoom35PutApiGenresGenreId"/>
+  </testsuite>
+  <testsuite name="03-Genre-Room / 3.6 DELETE /api/genres/{{seedGenreActionId}}" id="cb80c927-0357-43d4-b8f4-1c41ae8f581e" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.048">
+    <testcase name="Status 409" time="0.048" classname="03GenreRoom36DeleteApiGenresSeedGenreActionId"/>
+    <testcase name="Unified error" time="0.048" classname="03GenreRoom36DeleteApiGenresSeedGenreActionId"/>
+  </testsuite>
+  <testsuite name="03-Genre-Room / 3.7 POST /api/rooms" id="2fe14fdd-5eed-47f8-a61d-f9f0e03c0ad4" timestamp="2026-10-08T13:19:44.118Z" tests="3" failures="0" errors="0" time="0.172">
+    <testcase name="Status 201" time="0.172" classname="03GenreRoom37PostApiRooms"/>
+    <testcase name="totalSeats = seatRows x seatsPerRow" time="0.172" classname="03GenreRoom37PostApiRooms"/>
+  </testsuite>
+  <testsuite name="03-Genre-Room / 3.8 GET /api/rooms" id="895d9870-ed8e-4555-bd3b-49ba99c10062" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.006">
+    <testcase name="Status 401" time="0.006" classname="03GenreRoom38GetApiRooms"/>
+    <testcase name="Unified error" time="0.006" classname="03GenreRoom38GetApiRooms"/>
+  </testsuite>
+  <testsuite name="03-Genre-Room / 3.9 POST /api/rooms" id="1676572f-2276-4fd6-85e1-474d34e56855" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.051">
+    <testcase name="Status 400" time="0.051" classname="03GenreRoom39PostApiRooms"/>
+    <testcase name="Unified error" time="0.051" classname="03GenreRoom39PostApiRooms"/>
+  </testsuite>
+  <testsuite name="03-Genre-Room / 3.10 POST /api/rooms" id="f0b45e5a-db1b-4bc9-a981-0d3d4c43b6f7" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.064">
+    <testcase name="Status 400" time="0.064" classname="03GenreRoom310PostApiRooms"/>
+    <testcase name="Unified error" time="0.064" classname="03GenreRoom310PostApiRooms"/>
+  </testsuite>
+  <testsuite name="03-Genre-Room / 3.11 POST /api/rooms" id="26bb8ea4-d8bb-4292-897f-aa47a8686a9c" timestamp="2026-10-08T13:19:44.118Z" tests="1" failures="0" errors="0" time="0.058">
+    <testcase name="Status 201" time="0.058" classname="03GenreRoom311PostApiRooms"/>
+  </testsuite>
+  <testsuite name="03-Genre-Room / 3.12 GET /api/rooms/{{roomId}}" id="0f7568b1-1a20-497a-af5d-28aec7c5d10f" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.049">
+    <testcase name="Status 200" time="0.049" classname="03GenreRoom312GetApiRoomsRoomId"/>
+    <testcase name="Room detail" time="0.049" classname="03GenreRoom312GetApiRoomsRoomId"/>
+  </testsuite>
+  <testsuite name="03-Genre-Room / 3.13 PUT /api/rooms/{{roomId}}" id="2a5c2a81-dbdb-4aec-b018-1e41dd5bc99e" timestamp="2026-10-08T13:19:44.118Z" tests="1" failures="0" errors="0" time="0.075">
+    <testcase name="Status 200" time="0.075" classname="03GenreRoom313PutApiRoomsRoomId"/>
+  </testsuite>
+  <testsuite name="04-Movie / 4.1 POST /api/movies" id="fe6d3077-e412-486c-8abe-03429d4d72d1" timestamp="2026-10-08T13:19:44.118Z" tests="4" failures="0" errors="0" time="0.135">
+    <testcase name="Status 201" time="0.135" classname="04Movie41PostApiMovies"/>
+    <testcase name="Genre mapped" time="0.135" classname="04Movie41PostApiMovies"/>
+    <testcase name="movieId is ObjectId" time="0.135" classname="04Movie41PostApiMovies"/>
+  </testsuite>
+  <testsuite name="04-Movie / 4.2 GET /api/movies?keyword=galaxy" id="5bde2f83-46c2-4e94-8ff4-1e743c00816f" timestamp="2026-10-08T13:19:44.118Z" tests="1" failures="0" errors="0" time="0.044">
+    <testcase name="Status 200" time="0.044" classname="04Movie42GetApiMoviesKeywordGalaxy"/>
+  </testsuite>
+  <testsuite name="04-Movie / 4.3 GET /api/movies?status=NOW_SHOWING&amp;genreId={{seedGenreScifiId}}" id="3eef9f8b-de51-4e1a-a6fa-2228f73e0376" timestamp="2026-10-08T13:19:44.118Z" tests="3" failures="0" errors="0" time="0.054">
+    <testcase name="Status 200" time="0.054" classname="04Movie43GetApiMoviesStatusNowShowingAmpGenreIdSeedGenreScifiId"/>
+    <testcase name="Movie 66f200000000000000000001 matches filter" time="0.054" classname="04Movie43GetApiMoviesStatusNowShowingAmpGenreIdSeedGenreScifiId"/>
+  </testsuite>
+  <testsuite name="04-Movie / 4.4 PUT /api/movies/{{movieId}}" id="71b363cd-2c6c-4ba4-a4fe-c5943a040767" timestamp="2026-10-08T13:19:44.118Z" tests="1" failures="0" errors="0" time="0.074">
+    <testcase name="Status 200" time="0.074" classname="04Movie44PutApiMoviesMovieId"/>
+  </testsuite>
+  <testsuite name="04-Movie / 4.5 GET /api/movies/{{notFoundId}}" id="c59b63a8-227c-4087-8437-efd306ab8083" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.031">
+    <testcase name="Status 404" time="0.031" classname="04Movie45GetApiMoviesNotFoundId"/>
+    <testcase name="Unified error" time="0.031" classname="04Movie45GetApiMoviesNotFoundId"/>
+  </testsuite>
+  <testsuite name="04-Movie / 4.6 POST /api/movies" id="8d5b198e-d00d-43f9-9e06-3dbe0a025409" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.040">
+    <testcase name="Status 400" time="0.040" classname="04Movie46PostApiMovies"/>
+    <testcase name="Unified error" time="0.040" classname="04Movie46PostApiMovies"/>
+  </testsuite>
+  <testsuite name="04-Movie / 4.7 POST /api/movies" id="d31d10f1-8081-48b9-b3fe-6444b8fa6673" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.068">
+    <testcase name="Status 404" time="0.068" classname="04Movie47PostApiMovies"/>
+    <testcase name="Unified error" time="0.068" classname="04Movie47PostApiMovies"/>
+  </testsuite>
+  <testsuite name="04-Movie / 4.8 DELETE /api/genres/{{genreId}}" id="96af74ed-c0c8-4d0e-a92b-ff498e12420d" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.039">
+    <testcase name="Status 409" time="0.039" classname="04Movie48DeleteApiGenresGenreId"/>
+    <testcase name="Unified error" time="0.039" classname="04Movie48DeleteApiGenresGenreId"/>
+  </testsuite>
+  <testsuite name="04-Movie / 4.9 GET /api/movies/{{movieId}}" id="0f6f3373-5bd6-43c8-8c12-eedface2bc5b" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.042">
+    <testcase name="Status 200" time="0.042" classname="04Movie49GetApiMoviesMovieId"/>
+    <testcase name="Genre join" time="0.042" classname="04Movie49GetApiMoviesMovieId"/>
+  </testsuite>
+  <testsuite name="05-Showtime / 5.1 POST /api/showtimes" id="44ac39d6-e44c-410e-b773-ff548c06b8e9" timestamp="2026-10-08T13:19:44.118Z" tests="4" failures="0" errors="0" time="0.130">
+    <testcase name="Status 201" time="0.130" classname="05Showtime51PostApiShowtimes"/>
+    <testcase name="endTime = startTime + duration (120')" time="0.130" classname="05Showtime51PostApiShowtimes"/>
+    <testcase name="Status SCHEDULED" time="0.130" classname="05Showtime51PostApiShowtimes"/>
+  </testsuite>
+  <testsuite name="05-Showtime / 5.2 POST /api/showtimes" id="37a9fe38-07d6-4d22-a7db-778c634efd49" timestamp="2026-10-08T13:19:44.118Z" tests="3" failures="0" errors="0" time="0.081">
+    <testcase name="Status 409" time="0.081" classname="05Showtime52PostApiShowtimes"/>
+    <testcase name="Status 409 - overlap" time="0.081" classname="05Showtime52PostApiShowtimes"/>
+    <testcase name="Unified error" time="0.081" classname="05Showtime52PostApiShowtimes"/>
+  </testsuite>
+  <testsuite name="05-Showtime / 5.3 POST /api/showtimes" id="b1f995c8-1643-4c4b-8c50-db2b0835e3cc" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.067">
+    <testcase name="Status 201" time="0.067" classname="05Showtime53PostApiShowtimes"/>
+  </testsuite>
+  <testsuite name="05-Showtime / 5.4 POST /api/showtimes" id="b8149a26-b212-4103-931f-e5124aa3d1ac" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.046">
+    <testcase name="Status 400" time="0.046" classname="05Showtime54PostApiShowtimes"/>
+    <testcase name="Unified error" time="0.046" classname="05Showtime54PostApiShowtimes"/>
+  </testsuite>
+  <testsuite name="05-Showtime / 5.5 POST /api/showtimes" id="32ab4cba-6ff0-40d2-aeb3-8c5fd6a3edc3" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.071">
+    <testcase name="Status 400" time="0.071" classname="05Showtime55PostApiShowtimes"/>
+    <testcase name="Unified error" time="0.071" classname="05Showtime55PostApiShowtimes"/>
+  </testsuite>
+  <testsuite name="05-Showtime / 5.6 POST /api/showtimes" id="4a93cbc7-dbd4-49c2-8636-a02286fd97d5" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.044">
+    <testcase name="Status 400" time="0.044" classname="05Showtime56PostApiShowtimes"/>
+    <testcase name="Unified error" time="0.044" classname="05Showtime56PostApiShowtimes"/>
+  </testsuite>
+  <testsuite name="05-Showtime / 5.7 GET /api/showtimes?movieId={{movieId}}&amp;date={{futureDate}}" id="b179eb9f-d617-471e-86dd-b7fc23414e55" timestamp="2026-10-08T13:19:44.118Z" tests="3" failures="0" errors="0" time="0.079">
+    <testcase name="Status 200" time="0.079" classname="05Showtime57GetApiShowtimesMovieIdMovieIdAmpDateFutureDate"/>
+    <testcase name="Filter by movie &amp; date" time="0.079" classname="05Showtime57GetApiShowtimesMovieIdMovieIdAmpDateFutureDate"/>
+  </testsuite>
+  <testsuite name="05-Showtime / 5.8 GET /api/showtimes/{{showtimeId}}" id="aa8c9791-0300-4547-8840-9daf387a3f90" timestamp="2026-10-08T13:19:44.118Z" tests="1" failures="0" errors="0" time="0.063">
+    <testcase name="Status 200" time="0.063" classname="05Showtime58GetApiShowtimesShowtimeId"/>
+  </testsuite>
+  <testsuite name="05-Showtime / 5.9 DELETE /api/showtimes/{{showtime2Id}}" id="b9596f82-526a-4083-a4f8-ffb9e74080e7" timestamp="2026-10-08T13:19:44.118Z" tests="1" failures="0" errors="0" time="0.051">
+    <testcase name="Status 204" time="0.051" classname="05Showtime59DeleteApiShowtimesShowtime2Id"/>
+  </testsuite>
+  <testsuite name="05-Showtime / 5.10 GET /api/showtimes/{{showtime2Id}}" id="514744f9-0da7-49e3-a9c5-d6259b959a39" timestamp="2026-10-08T13:19:44.118Z" tests="1" failures="0" errors="0" time="0.061">
+    <testcase name="Status 200" time="0.061" classname="05Showtime510GetApiShowtimesShowtime2Id"/>
+  </testsuite>
+  <testsuite name="05-Showtime / 5.11 DELETE /api/rooms/{{roomId}}" id="f204d99d-0c26-4aea-a22e-33946b2da7ea" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.049">
+    <testcase name="Status 409" time="0.049" classname="05Showtime511DeleteApiRoomsRoomId"/>
+    <testcase name="Unified error" time="0.049" classname="05Showtime511DeleteApiRoomsRoomId"/>
+  </testsuite>
+  <testsuite name="05-Showtime / 5.12 DELETE /api/movies/{{movieId}}" id="abc681a6-5adc-4392-b823-fb1ceaff0448" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.053">
+    <testcase name="Status 409" time="0.053" classname="05Showtime512DeleteApiMoviesMovieId"/>
+    <testcase name="Unified error" time="0.053" classname="05Showtime512DeleteApiMoviesMovieId"/>
+  </testsuite>
+  <testsuite name="05-Showtime / 5.13 POST /api/showtimes" id="b9e23bfd-b5a0-47ec-bcad-ee75e6f5df70" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.036">
+    <testcase name="Status 404" time="0.036" classname="05Showtime513PostApiShowtimes"/>
+    <testcase name="Unified error" time="0.036" classname="05Showtime513PostApiShowtimes"/>
+  </testsuite>
+  <testsuite name="05-Showtime / 5.14 PUT /api/showtimes/{{showtimeId}}" id="366a689d-defe-44ad-879f-c879a1eb397a" timestamp="2026-10-08T13:19:44.118Z" tests="1" failures="0" errors="0" time="0.073">
+    <testcase name="Status 200" time="0.073" classname="05Showtime514PutApiShowtimesShowtimeId"/>
+  </testsuite>
+  <testsuite name="05-Showtime / 5.15 POST /api/showtimes" id="a2ab63e4-eb92-48a7-b00a-4a6b7071d73a" timestamp="2026-10-08T13:19:44.118Z" tests="1" failures="0" errors="0" time="0.072">
+    <testcase name="Status 404" time="0.072" classname="05Showtime515PostApiShowtimes"/>
+  </testsuite>
+  <testsuite name="05-Showtime / 5.16 POST /api/showtimes" id="b2d731b0-2c91-4c8c-9fea-845094e6a2a6" timestamp="2026-10-08T13:19:44.118Z" tests="1" failures="0" errors="0" time="0.055">
+    <testcase name="Status 201" time="0.055" classname="05Showtime516PostApiShowtimes"/>
+  </testsuite>
+  <testsuite name="05-Showtime / 5.17 DELETE /api/showtimes/{{boundaryShowtimeId}}" id="872d4558-15ea-4ae5-addc-686e8f17e0b1" timestamp="2026-10-08T13:19:44.118Z" tests="1" failures="0" errors="0" time="0.056">
+    <testcase name="Status 204" time="0.056" classname="05Showtime517DeleteApiShowtimesBoundaryShowtimeId"/>
+  </testsuite>
+  <testsuite name="06-Booking / 6.1 GET /api/bookings/showtimes/{{showtimeId}}/seats" id="d6dc7763-32a8-403f-9054-e35d008d6790" timestamp="2026-10-08T13:19:44.118Z" tests="3" failures="0" errors="0" time="0.106">
+    <testcase name="Status 200" time="0.106" classname="06Booking61GetApiBookingsShowtimesShowtimeIdSeats"/>
+    <testcase name="40 seats, all available" time="0.106" classname="06Booking61GetApiBookingsShowtimesShowtimeIdSeats"/>
+  </testsuite>
+  <testsuite name="06-Booking / 6.2 POST /api/bookings" id="1cc30426-50b8-4f9f-955a-b8ddb103eff6" timestamp="2026-10-08T13:19:44.118Z" tests="5" failures="0" errors="0" time="0.517">
+    <testcase name="Status 201" time="0.517" classname="06Booking62PostApiBookings"/>
+    <testcase name="CONFIRMED with 2 tickets" time="0.517" classname="06Booking62PostApiBookings"/>
+    <testcase name="totalPrice = sum of ticket prices (server-side)" time="0.517" classname="06Booking62PostApiBookings"/>
+    <testcase name="Snapshot movie info" time="0.517" classname="06Booking62PostApiBookings"/>
+  </testsuite>
+  <testsuite name="06-Booking / 6.3 POST /api/bookings" id="0125f267-7a61-4349-a396-83255e596fb0" timestamp="2026-10-08T13:19:44.118Z" tests="4" failures="0" errors="0" time="0.195">
+    <testcase name="Status 409" time="0.195" classname="06Booking63PostApiBookings"/>
+    <testcase name="Status 409 - seat taken" time="0.195" classname="06Booking63PostApiBookings"/>
+    <testcase name="Message mentions seat" time="0.195" classname="06Booking63PostApiBookings"/>
+    <testcase name="Unified error" time="0.195" classname="06Booking63PostApiBookings"/>
+  </testsuite>
+  <testsuite name="06-Booking / 6.4 POST /api/bookings" id="d68a0038-339b-4aec-8f8d-db238cd56809" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.106">
+    <testcase name="Status 400" time="0.106" classname="06Booking64PostApiBookings"/>
+    <testcase name="Unified error" time="0.106" classname="06Booking64PostApiBookings"/>
+  </testsuite>
+  <testsuite name="06-Booking / 6.5 POST /api/bookings" id="64ee243e-b058-4575-9e43-a1443d156552" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.068">
+    <testcase name="Status 400" time="0.068" classname="06Booking65PostApiBookings"/>
+    <testcase name="Unified error" time="0.068" classname="06Booking65PostApiBookings"/>
+  </testsuite>
+  <testsuite name="06-Booking / 6.6 POST /api/bookings" id="a338c436-4363-4bf4-a277-6e460071cf9c" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.102">
+    <testcase name="Status 400" time="0.102" classname="06Booking66PostApiBookings"/>
+    <testcase name="Unified error" time="0.102" classname="06Booking66PostApiBookings"/>
+  </testsuite>
+  <testsuite name="06-Booking / 6.7 POST /api/bookings" id="f991f076-b63e-4a3b-9b63-29d92e45e177" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.078">
+    <testcase name="Status 404" time="0.078" classname="06Booking67PostApiBookings"/>
+    <testcase name="Unified error" time="0.078" classname="06Booking67PostApiBookings"/>
+  </testsuite>
+  <testsuite name="06-Booking / 6.8 POST /api/bookings" id="92e2baae-9241-4f9b-b0e0-9b575f6143ba" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.108">
+    <testcase name="Status 400" time="0.108" classname="06Booking68PostApiBookings"/>
+    <testcase name="Unified error" time="0.108" classname="06Booking68PostApiBookings"/>
+  </testsuite>
+  <testsuite name="06-Booking / 6.9 POST /api/bookings" id="207444bb-cabb-4573-9cb0-cdb2c252ba27" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.058">
+    <testcase name="Status 400" time="0.058" classname="06Booking69PostApiBookings"/>
+    <testcase name="Unified error" time="0.058" classname="06Booking69PostApiBookings"/>
+  </testsuite>
+  <testsuite name="06-Booking / 6.10 POST /api/bookings" id="126f81ea-d288-4c35-be08-202925f7a511" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.036">
+    <testcase name="Status 400" time="0.036" classname="06Booking610PostApiBookings"/>
+    <testcase name="Unified error" time="0.036" classname="06Booking610PostApiBookings"/>
+  </testsuite>
+  <testsuite name="06-Booking / 6.11 POST /api/bookings" id="75a94d41-a6e7-4260-a20d-f23f8588a659" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.011">
+    <testcase name="Status 403" time="0.011" classname="06Booking611PostApiBookings"/>
+    <testcase name="Unified error" time="0.011" classname="06Booking611PostApiBookings"/>
+  </testsuite>
+  <testsuite name="06-Booking / 6.12 POST /api/bookings" id="42984cf3-481b-493d-994a-26129912db7a" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.005">
+    <testcase name="Status 401" time="0.005" classname="06Booking612PostApiBookings"/>
+    <testcase name="Unified error" time="0.005" classname="06Booking612PostApiBookings"/>
+  </testsuite>
+  <testsuite name="06-Booking / 6.13 POST /api/bookings" id="d0f523da-0a16-4d20-978c-55c02e16371c" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.114">
+    <testcase name="Status 201" time="0.114" classname="06Booking613PostApiBookings"/>
+  </testsuite>
+  <testsuite name="06-Booking / 6.14 GET /api/bookings/showtimes/{{showtimeId}}/seats" id="6ed2a41c-1dc6-43f7-8f27-93521002335a" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.063">
+    <testcase name="Status 200" time="0.063" classname="06Booking614GetApiBookingsShowtimesShowtimeIdSeats"/>
+    <testcase name="Booked seats updated" time="0.063" classname="06Booking614GetApiBookingsShowtimesShowtimeIdSeats"/>
+  </testsuite>
+  <testsuite name="06-Booking / 6.16 POST /api/bookings" id="1c05370c-9e53-4024-a3d8-e97739cdebfb" timestamp="2026-10-08T13:19:44.118Z" tests="1" failures="0" errors="0" time="0.089">
+    <testcase name="Status 400" time="0.089" classname="06Booking616PostApiBookings"/>
+  </testsuite>
+  <testsuite name="07-History-Cancel / 7.1 GET /api/bookings/my" id="0698296f-74ac-4dcb-bbb4-42e204cddaa2" timestamp="2026-10-08T13:19:44.118Z" tests="4" failures="0" errors="0" time="0.268">
+    <testcase name="Status 200" time="0.268" classname="07HistoryCancel71GetApiBookingsMy"/>
+    <testcase name="Only my bookings" time="0.268" classname="07HistoryCancel71GetApiBookingsMy"/>
+    <testcase name="Sorted by bookingDate DESC" time="0.268" classname="07HistoryCancel71GetApiBookingsMy"/>
+  </testsuite>
+  <testsuite name="07-History-Cancel / 7.2 GET /api/bookings/{{bookingId}}" id="bfd8b6da-7b27-4fa1-b6f0-5ef9ec117b3f" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.064">
+    <testcase name="Status 403" time="0.064" classname="07HistoryCancel72GetApiBookingsBookingId"/>
+    <testcase name="Unified error" time="0.064" classname="07HistoryCancel72GetApiBookingsBookingId"/>
+  </testsuite>
+  <testsuite name="07-History-Cancel / 7.3 GET /api/bookings/{{bookingId}}" id="64d07774-8749-4101-80f9-0a0c58479f20" timestamp="2026-10-08T13:19:44.118Z" tests="1" failures="0" errors="0" time="0.063">
+    <testcase name="Status 200" time="0.063" classname="07HistoryCancel73GetApiBookingsBookingId"/>
+  </testsuite>
+  <testsuite name="07-History-Cancel / 7.4 PUT /api/bookings/{{booking2Id}}/cancel" id="812bcc2a-0a77-4279-8bac-efc8398b12ec" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.066">
+    <testcase name="Status 403" time="0.066" classname="07HistoryCancel74PutApiBookingsBooking2IdCancel"/>
+    <testcase name="Unified error" time="0.066" classname="07HistoryCancel74PutApiBookingsBooking2IdCancel"/>
+  </testsuite>
+  <testsuite name="07-History-Cancel / 7.5 PUT /api/bookings/{{booking2Id}}/cancel" id="9eaa569d-c50f-429b-8dea-5db009e8670e" timestamp="2026-10-08T13:19:44.118Z" tests="3" failures="0" errors="0" time="0.182">
+    <testcase name="Status 200" time="0.182" classname="07HistoryCancel75PutApiBookingsBooking2IdCancel"/>
+    <testcase name="Cancelled" time="0.182" classname="07HistoryCancel75PutApiBookingsBooking2IdCancel"/>
+  </testsuite>
+  <testsuite name="07-History-Cancel / 7.6 PUT /api/bookings/{{booking2Id}}/cancel" id="2b40cc2c-36e0-44ba-b470-2362410a9834" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.062">
+    <testcase name="Status 400" time="0.062" classname="07HistoryCancel76PutApiBookingsBooking2IdCancel"/>
+    <testcase name="Unified error" time="0.062" classname="07HistoryCancel76PutApiBookingsBooking2IdCancel"/>
+  </testsuite>
+  <testsuite name="07-History-Cancel / 7.7 POST /api/bookings" id="1b1f9ea9-a8cd-40d4-92ec-ea86c41b03b2" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.124">
+    <testcase name="Status 201" time="0.124" classname="07HistoryCancel77PostApiBookings"/>
+    <testcase name="Seat A1 can be re-booked after cancel" time="0.124" classname="07HistoryCancel77PostApiBookings"/>
+  </testsuite>
+  <testsuite name="07-History-Cancel / 7.8 GET /api/bookings" id="2612162f-5a7d-4929-b617-625a2de1bcc0" timestamp="2026-10-08T13:19:44.118Z" tests="1" failures="0" errors="0" time="0.065">
+    <testcase name="Status 200" time="0.065" classname="07HistoryCancel78GetApiBookings"/>
+  </testsuite>
+  <testsuite name="07-History-Cancel / 7.9 GET /api/bookings/my" id="90fbcdc6-73d9-4612-b0b8-8086676caf53" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.008">
+    <testcase name="Status 403" time="0.008" classname="07HistoryCancel79GetApiBookingsMy"/>
+    <testcase name="Unified error" time="0.008" classname="07HistoryCancel79GetApiBookingsMy"/>
+  </testsuite>
+  <testsuite name="07-History-Cancel / 7.10 GET /api/bookings/99999" id="7e85de56-1d79-4993-b81e-728cc09e4af2" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.047">
+    <testcase name="Status 404" time="0.047" classname="07HistoryCancel710GetApiBookings99999"/>
+    <testcase name="Unified error" time="0.047" classname="07HistoryCancel710GetApiBookings99999"/>
+  </testsuite>
+  <testsuite name="07-History-Cancel / 7.11 POST /api/showtimes" id="2e9222fc-2b8b-45e2-9e3e-6e0afacc3bea" timestamp="2026-10-08T13:19:44.118Z" tests="1" failures="0" errors="0" time="0.063">
+    <testcase name="Status 201" time="0.063" classname="07HistoryCancel711PostApiShowtimes"/>
+  </testsuite>
+  <testsuite name="07-History-Cancel / 7.12 POST /api/bookings" id="cf655a5f-559b-42eb-8cae-0be32904fefc" timestamp="2026-10-08T13:19:44.118Z" tests="1" failures="0" errors="0" time="0.117">
+    <testcase name="Status 201" time="0.117" classname="07HistoryCancel712PostApiBookings"/>
+  </testsuite>
+  <testsuite name="07-History-Cancel / 7.13 PUT /api/bookings/{{nearBookingId}}/cancel" id="55c8115e-7118-41e2-bf70-370714394825" timestamp="2026-10-08T13:19:44.118Z" tests="1" failures="0" errors="0" time="0.036">
+    <testcase name="Status 400" time="0.036" classname="07HistoryCancel713PutApiBookingsNearBookingIdCancel"/>
+  </testsuite>
+  <testsuite name="07-History-Cancel / 7.14 PUT /api/bookings/{{nearBookingId}}/cancel" id="9fa5dcc9-af06-40a7-841f-dca4577b09ea" timestamp="2026-10-08T13:19:44.118Z" tests="1" failures="0" errors="0" time="0.205">
+    <testcase name="Status 200" time="0.205" classname="07HistoryCancel714PutApiBookingsNearBookingIdCancel"/>
+  </testsuite>
+  <testsuite name="08-Report / 8.1 GET /api/bookings/report?startDate={{today}}&amp;endDate={{today}}" id="0d5b2a61-436c-4cf2-86d5-534e23c1d092" timestamp="2026-10-08T13:19:44.118Z" tests="7" failures="0" errors="0" time="0.092">
+    <testcase name="Status 200" time="0.092" classname="08Report81GetApiBookingsReportStartDateTodayAmpEndDateToday"/>
+    <testcase name="Summary is consistent" time="0.092" classname="08Report81GetApiBookingsReportStartDateTodayAmpEndDateToday"/>
+    <testcase name="Only CONFIRMED bookings" time="0.092" classname="08Report81GetApiBookingsReportStartDateTodayAmpEndDateToday"/>
+    <testcase name="Cancelled booking excluded" time="0.092" classname="08Report81GetApiBookingsReportStartDateTodayAmpEndDateToday"/>
+    <testcase name="bookings sorted by bookingDate DESC" time="0.092" classname="08Report81GetApiBookingsReportStartDateTodayAmpEndDateToday"/>
+    <testcase name="revenueByMovie sorted by revenue DESC" time="0.092" classname="08Report81GetApiBookingsReportStartDateTodayAmpEndDateToday"/>
+  </testsuite>
+  <testsuite name="08-Report / 8.2 GET /api/bookings/report?startDate=2026-12-31&amp;endDate=2026-01-01" id="6bc4041f-6d79-48a7-9699-581a9873ee30" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.040">
+    <testcase name="Status 400" time="0.040" classname="08Report82GetApiBookingsReportStartDate20261231AmpEndDate20260101"/>
+    <testcase name="Unified error" time="0.040" classname="08Report82GetApiBookingsReportStartDate20261231AmpEndDate20260101"/>
+  </testsuite>
+  <testsuite name="08-Report / 8.3 GET /api/bookings/report?startDate={{today}}&amp;endDate={{today}}" id="eb84f072-5ba0-464e-91c7-a5cc6497fbae" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.011">
+    <testcase name="Status 403" time="0.011" classname="08Report83GetApiBookingsReportStartDateTodayAmpEndDateToday"/>
+    <testcase name="Unified error" time="0.011" classname="08Report83GetApiBookingsReportStartDateTodayAmpEndDateToday"/>
+  </testsuite>
+  <testsuite name="08-Report / 8.4 GET /api/bookings/report?startDate={{today}}" id="a8ceee9e-b651-4ae5-bb94-5c7ec670cd40" timestamp="2026-10-08T13:19:44.118Z" tests="2" failures="0" errors="0" time="0.041">
+    <testcase name="Status 400" time="0.041" classname="08Report84GetApiBookingsReportStartDateToday"/>
+    <testcase name="Unified error" time="0.041" classname="08Report84GetApiBookingsReportStartDateToday"/>
+  </testsuite>
+  <testsuite name="08-Report / 8.5 GET /api/bookings/report?startDate=2020-01-01&amp;endDate=2020-01-31" id="35f7ed4d-ab35-4398-b29e-8e3290ccd358" timestamp="2026-10-08T13:19:44.118Z" tests="1" failures="0" errors="0" time="0.071">
+    <testcase name="Status 200" time="0.071" classname="08Report85GetApiBookingsReportStartDate20200101AmpEndDate20200131"/>
+  </testsuite>
+  <testsuite name="09-CRUD-Cleanup / 9.1 POST /api/genres" id="b34f103f-8ceb-43a9-99d2-dcb86b717b2f" timestamp="2026-10-08T13:19:44.118Z" tests="1" failures="0" errors="0" time="0.034">
+    <testcase name="Status 201" time="0.034" classname="09CrudCleanup91PostApiGenres"/>
+  </testsuite>
+  <testsuite name="09-CRUD-Cleanup / 9.2 DELETE /api/genres/{{unusedGenreId}}" id="710614c3-b995-4d83-b4ae-f753c60daf9b" timestamp="2026-10-08T13:19:44.118Z" tests="1" failures="0" errors="0" time="0.050">
+    <testcase name="Status 204" time="0.050" classname="09CrudCleanup92DeleteApiGenresUnusedGenreId"/>
+  </testsuite>
+  <testsuite name="09-CRUD-Cleanup / 9.3 POST /api/rooms" id="024a895b-bb8a-4fd2-9da4-527253064c4a" timestamp="2026-10-08T13:19:44.118Z" tests="1" failures="0" errors="0" time="0.054">
+    <testcase name="Status 201" time="0.054" classname="09CrudCleanup93PostApiRooms"/>
+  </testsuite>
+  <testsuite name="09-CRUD-Cleanup / 9.4 DELETE /api/rooms/{{unusedRoomId}}" id="d0afd8c8-4998-43e5-995e-3e2d45efdbc4" timestamp="2026-10-08T13:19:44.118Z" tests="1" failures="0" errors="0" time="0.041">
+    <testcase name="Status 204" time="0.041" classname="09CrudCleanup94DeleteApiRoomsUnusedRoomId"/>
+  </testsuite>
+  <testsuite name="09-CRUD-Cleanup / 9.5 POST /api/movies" id="4a665b78-bd83-4629-9fb3-b4d721afa9c7" timestamp="2026-10-08T13:19:44.118Z" tests="1" failures="0" errors="0" time="0.039">
+    <testcase name="Status 201" time="0.039" classname="09CrudCleanup95PostApiMovies"/>
+  </testsuite>
+  <testsuite name="09-CRUD-Cleanup / 9.6 DELETE /api/movies/{{unusedMovieId}}" id="bf695229-2730-42c4-9312-401a8e8bc0c9" timestamp="2026-10-08T13:19:44.118Z" tests="1" failures="0" errors="0" time="0.029">
+    <testcase name="Status 204" time="0.029" classname="09CrudCleanup96DeleteApiMoviesUnusedMovieId"/>
+  </testsuite>
+</testsuites>
