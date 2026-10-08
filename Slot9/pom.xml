@@ -1,0 +1,1 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"><modelVersion>4.0.0</modelVersion><groupId>com.fudn</groupId><artifactId>slot9-part5</artifactId><version>1.0.0</version><packaging>pom</packaging><modules><module>product-service</module><module>inventory-service</module><module>order-service</module><module>api-gateway</module></modules></project>
