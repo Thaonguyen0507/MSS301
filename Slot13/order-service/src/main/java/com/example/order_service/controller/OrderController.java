@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -29,11 +30,25 @@ public class OrderController {
 
     @PostMapping("/orders")
     public ResponseEntity<Order> createOrder(
-            @RequestBody OrderRequest request) {
+            @RequestBody OrderRequest request,
+            @RequestHeader(value = "Idempotency-Key", required = false) String idempotencyKey) {
         String correlationId = UUID.randomUUID().toString();
         log.info("[CorrelationId: {}] Received create order request for product: {}", correlationId, request.getProductId());
 
-        Order order = orderService.createOrder(request, correlationId);
+        if (idempotencyKey != null && !idempotencyKey.trim().isEmpty()) {
+            try {
+                Order cachedOrder = orderService.getOrderByIdempotencyKey(idempotencyKey);
+                if (cachedOrder != null) {
+                    log.info("[CorrelationId: {}] Returning cached order for idempotency key: {}", correlationId, idempotencyKey);
+                    return ResponseEntity.ok()
+                            .header("X-Idempotent-Response", "true")
+                            .body(cachedOrder);
+                }
+            } catch (Exception ignored) {
+            }
+        }
+
+        Order order = orderService.createOrder(request, idempotencyKey, correlationId);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(order);
     }
