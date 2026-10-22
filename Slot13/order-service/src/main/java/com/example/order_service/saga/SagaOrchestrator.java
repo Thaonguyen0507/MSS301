@@ -10,6 +10,7 @@ import com.example.order_service.repository.SagaStateRepository;
 import java.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
@@ -52,6 +53,7 @@ public class SagaOrchestrator {
     }
 
     public void executeSaga(Order order, String correlationId) {
+        MDC.put("correlationId", correlationId);
         String orderId = order.getId();
         log.info("[CorrelationId: {}] [OrderId: {}] Starting saga orchestration", correlationId, orderId);
 
@@ -76,6 +78,7 @@ public class SagaOrchestrator {
 
             order.setStatus("FAILED");
             orderRepository.save(order);
+            MDC.remove("correlationId");
             return;
         }
 
@@ -109,6 +112,7 @@ public class SagaOrchestrator {
 
             order.setStatus("COMPENSATED");
             orderRepository.save(order);
+            MDC.remove("correlationId");
             return;
         }
 
@@ -119,6 +123,7 @@ public class SagaOrchestrator {
         order.setStatus("COMPLETED");
         orderRepository.save(order);
         log.info("[CorrelationId: {}] [OrderId: {}] [Step: PAYMENT_DONE] Saga completed successfully", correlationId, orderId);
+        MDC.remove("correlationId");
     }
 
     @Retryable(
@@ -132,6 +137,7 @@ public class SagaOrchestrator {
         String url = inventoryServiceUrl + "/inventory/reserve";
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("X-Correlation-ID", correlationId);
         InventoryRequest request = new InventoryRequest(order.getProductId(), order.getQuantity(), order.getId());
         HttpEntity<InventoryRequest> entity = new HttpEntity<>(request, headers);
         restTemplate.postForEntity(url, entity, Void.class);
@@ -147,6 +153,7 @@ public class SagaOrchestrator {
         String url = inventoryServiceUrl + "/inventory/release";
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("X-Correlation-ID", correlationId);
         InventoryRequest request = new InventoryRequest(order.getProductId(), order.getQuantity(), order.getId());
         HttpEntity<InventoryRequest> entity = new HttpEntity<>(request, headers);
         restTemplate.postForEntity(url, entity, Void.class);
@@ -163,6 +170,7 @@ public class SagaOrchestrator {
         String url = paymentServiceUrl + "/payment/process";
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("X-Correlation-ID", correlationId);
         PaymentRequest request = new PaymentRequest(order.getId(), order.getAmount());
         HttpEntity<PaymentRequest> entity = new HttpEntity<>(request, headers);
         restTemplate.postForEntity(url, entity, Void.class);
@@ -178,6 +186,7 @@ public class SagaOrchestrator {
         String url = paymentServiceUrl + "/payment/refund";
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("X-Correlation-ID", correlationId);
         PaymentRefundRequest request = new PaymentRefundRequest(order.getId());
         HttpEntity<PaymentRefundRequest> entity = new HttpEntity<>(request, headers);
         restTemplate.postForEntity(url, entity, Void.class);

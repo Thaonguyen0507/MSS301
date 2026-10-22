@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +34,7 @@ public class OrderController {
             @RequestBody OrderRequest request,
             @RequestHeader(value = "Idempotency-Key", required = false) String idempotencyKey) {
         String correlationId = UUID.randomUUID().toString();
+        MDC.put("correlationId", correlationId);
         log.info("[CorrelationId: {}] Received create order request for product: {}", correlationId, request.getProductId());
 
         if (idempotencyKey != null && !idempotencyKey.trim().isEmpty()) {
@@ -42,6 +44,7 @@ public class OrderController {
                     log.info("[CorrelationId: {}] Returning cached order for idempotency key: {}", correlationId, idempotencyKey);
                     return ResponseEntity.ok()
                             .header("X-Idempotent-Response", "true")
+                            .header("X-Correlation-ID", correlationId)
                             .body(cachedOrder);
                 }
             } catch (Exception ignored) {
@@ -50,6 +53,7 @@ public class OrderController {
 
         Order order = orderService.createOrder(request, idempotencyKey, correlationId);
         return ResponseEntity.status(HttpStatus.CREATED)
+                .header("X-Correlation-ID", correlationId)
                 .body(order);
     }
 
