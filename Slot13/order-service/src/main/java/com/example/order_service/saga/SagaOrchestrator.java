@@ -10,12 +10,16 @@ import com.example.order_service.repository.SagaStateRepository;
 import java.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.retry.annotation.Retryable;
+import org.springframework.retry.annotation.Backoff;
 
 @Component
 public class SagaOrchestrator {
@@ -25,6 +29,7 @@ public class SagaOrchestrator {
     private final RestTemplate restTemplate;
     private final OrderRepository orderRepository;
     private final SagaStateRepository sagaStateRepository;
+    private SagaOrchestrator self;
 
     @Value("${external-services.inventory-url}")
     private String inventoryServiceUrl;
@@ -40,6 +45,11 @@ public class SagaOrchestrator {
         this.sagaStateRepository = sagaStateRepository;
     }
 
+    @Autowired
+    public void setSelf(@Lazy SagaOrchestrator self) {
+        this.self = self;
+    }
+
     public void executeSaga(Order order, String correlationId) {
         String orderId = order.getId();
         log.info("[CorrelationId: {}] [OrderId: {}] Starting saga orchestration", correlationId, orderId);
@@ -49,7 +59,7 @@ public class SagaOrchestrator {
 
         try {
             log.info("[CorrelationId: {}] [OrderId: {}] [Step: INIT] Attempting to reserve inventory", correlationId, orderId);
-            reserveInventory(order, correlationId);
+            self.reserveInventory(order, correlationId);
 
             sagaState.setCurrentStep("INVENTORY_RESERVED");
             sagaState.setUpdatedAt(LocalDateTime.now());
@@ -70,7 +80,7 @@ public class SagaOrchestrator {
 
         try {
             log.info("[CorrelationId: {}] [OrderId: {}] [Step: INVENTORY_RESERVED] Attempting to process payment", correlationId, orderId);
-            processPayment(order, correlationId);
+            self.processPayment(order, correlationId);
 
             sagaState.setCurrentStep("PAYMENT_DONE");
             sagaState.setUpdatedAt(LocalDateTime.now());
@@ -86,7 +96,7 @@ public class SagaOrchestrator {
 
             log.info("[CorrelationId: {}] [OrderId: {}] [Step: INVENTORY_RESERVED] Starting compensation: releasing inventory", correlationId, orderId);
             try {
-                releaseInventory(order, correlationId);
+                self.releaseInventory(order, correlationId);
                 log.info("[CorrelationId: {}] [OrderId: {}] [Step: INVENTORY_RESERVED] Compensation completed successfully: inventory released", correlationId, orderId);
             } catch (Exception compEx) {
                 log.error("[CorrelationId: {}] [OrderId: {}] [Step: INVENTORY_RESERVED] Compensation failed: inventory release error: {}", correlationId, orderId, compEx.getMessage(), compEx);
@@ -110,6 +120,11 @@ public class SagaOrchestrator {
         log.info("[CorrelationId: {}] [OrderId: {}] [Step: PAYMENT_DONE] Saga completed successfully", correlationId, orderId);
     }
 
+    @Retryable(
+        retryFor = {Exception.class},
+        maxAttempts = 3,
+        backoff = @Backoff(delay = 1000, multiplier = 2.0)
+    )
     public void reserveInventory(Order order, String correlationId) {
         log.info("[CorrelationId: {}] [OrderId: {}] Sending HTTP reserve inventory request", correlationId, order.getId());
         String url = inventoryServiceUrl + "/inventory/reserve";
@@ -120,6 +135,11 @@ public class SagaOrchestrator {
         restTemplate.postForEntity(url, entity, Void.class);
     }
 
+    @Retryable(
+        retryFor = {Exception.class},
+        maxAttempts = 3,
+        backoff = @Backoff(delay = 1000, multiplier = 2.0)
+    )
     public void releaseInventory(Order order, String correlationId) {
         log.info("[CorrelationId: {}] [OrderId: {}] Sending HTTP release inventory request", correlationId, order.getId());
         String url = inventoryServiceUrl + "/inventory/release";
@@ -130,6 +150,11 @@ public class SagaOrchestrator {
         restTemplate.postForEntity(url, entity, Void.class);
     }
 
+    @Retryable(
+        retryFor = {Exception.class},
+        maxAttempts = 3,
+        backoff = @Backoff(delay = 1000, multiplier = 2.0)
+    )
     public void processPayment(Order order, String correlationId) {
         log.info("[CorrelationId: {}] [OrderId: {}] Sending HTTP process payment request", correlationId, order.getId());
         String url = paymentServiceUrl + "/payment/process";
@@ -140,6 +165,11 @@ public class SagaOrchestrator {
         restTemplate.postForEntity(url, entity, Void.class);
     }
 
+    @Retryable(
+        retryFor = {Exception.class},
+        maxAttempts = 3,
+        backoff = @Backoff(delay = 1000, multiplier = 2.0)
+    )
     public void refundPayment(Order order, String correlationId) {
         log.info("[CorrelationId: {}] [OrderId: {}] Sending HTTP refund payment request", correlationId, order.getId());
         String url = paymentServiceUrl + "/payment/refund";
