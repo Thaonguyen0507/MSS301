@@ -21,3 +21,16 @@ external-services:
   inventory-url: http://localhost:8081
   payment-url: http://localhost:8082
 
+resilience4j:
+  circuitbreaker:
+    instances:
+      inventoryService:
+        failure-rate-threshold: 50
+        minimum-number-of-calls: 5
+        wait-duration-in-open-state: 30000
+        permitted-number-of-calls-in-half-open-state: 3
+      paymentService:
+        failure-rate-threshold: 50
+        minimum-number-of-calls: 5
+        wait-duration-in-open-state: 30000
+        permitted-number-of-calls-in-half-open-state: 3

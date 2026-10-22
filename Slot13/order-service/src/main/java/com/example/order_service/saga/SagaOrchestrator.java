@@ -20,6 +20,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.retry.annotation.Backoff;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 
 @Component
 public class SagaOrchestrator {
@@ -125,6 +126,7 @@ public class SagaOrchestrator {
         maxAttempts = 3,
         backoff = @Backoff(delay = 1000, multiplier = 2.0)
     )
+    @CircuitBreaker(name = "inventoryService", fallbackMethod = "fallbackReserveInventory")
     public void reserveInventory(Order order, String correlationId) {
         log.info("[CorrelationId: {}] [OrderId: {}] Sending HTTP reserve inventory request", correlationId, order.getId());
         String url = inventoryServiceUrl + "/inventory/reserve";
@@ -155,6 +157,7 @@ public class SagaOrchestrator {
         maxAttempts = 3,
         backoff = @Backoff(delay = 1000, multiplier = 2.0)
     )
+    @CircuitBreaker(name = "paymentService", fallbackMethod = "fallbackProcessPayment")
     public void processPayment(Order order, String correlationId) {
         log.info("[CorrelationId: {}] [OrderId: {}] Sending HTTP process payment request", correlationId, order.getId());
         String url = paymentServiceUrl + "/payment/process";
@@ -180,4 +183,13 @@ public class SagaOrchestrator {
         restTemplate.postForEntity(url, entity, Void.class);
     }
 
+    public void fallbackReserveInventory(Order order, String correlationId, Throwable t) {
+        log.error("[CorrelationId: {}] [OrderId: {}] Circuit breaker fallback for reserve inventory. Error: {}", correlationId, order.getId(), t.getMessage());
+        throw new RuntimeException("Inventory Service is unavailable (Circuit Breaker OPEN): " + t.getMessage(), t);
+    }
+
+    public void fallbackProcessPayment(Order order, String correlationId, Throwable t) {
+        log.error("[CorrelationId: {}] [OrderId: {}] Circuit breaker fallback for process payment. Error: {}", correlationId, order.getId(), t.getMessage());
+        throw new RuntimeException("Payment Service is unavailable (Circuit Breaker OPEN): " + t.getMessage(), t);
+    }
 }
