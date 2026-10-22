@@ -2,6 +2,7 @@ package com.example.order_service.controller;
 
 import com.example.order_service.dto.OrderRequest;
 import com.example.order_service.model.Order;
+import com.example.order_service.model.SagaState;
 import com.example.order_service.service.OrderService;
 import java.util.List;
 import java.util.UUID;
@@ -47,4 +48,8 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getOrderById(id));
     }
 
+    @GetMapping("/saga/{orderId}")
+    public ResponseEntity<SagaState> getSagaState(@PathVariable String orderId) {
+        return ResponseEntity.ok(orderService.getSagaState(orderId));
+    }
 }

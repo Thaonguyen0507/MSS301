@@ -3,7 +3,9 @@ package com.example.order_service.service;
 import com.example.order_service.dto.OrderRequest;
 import com.example.order_service.exception.OrderNotFoundException;
 import com.example.order_service.model.Order;
+import com.example.order_service.model.SagaState;
 import com.example.order_service.repository.OrderRepository;
+import com.example.order_service.repository.SagaStateRepository;
 import com.example.order_service.saga.SagaOrchestrator;
 import java.util.List;
 import org.springframework.stereotype.Service;
@@ -13,11 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class OrderService {
 
     private final OrderRepository orderRepository;
+    private final SagaStateRepository sagaStateRepository;
     private final SagaOrchestrator sagaOrchestrator;
 
     public OrderService(OrderRepository orderRepository,
+                        SagaStateRepository sagaStateRepository,
                         SagaOrchestrator sagaOrchestrator) {
         this.orderRepository = orderRepository;
+        this.sagaStateRepository = sagaStateRepository;
         this.sagaOrchestrator = sagaOrchestrator;
     }
 
@@ -45,6 +50,12 @@ public class OrderService {
     public Order getOrderById(String id) {
         return orderRepository.findById(id)
             .orElseThrow(() -> new OrderNotFoundException("Order not found: " + id));
+    }
+
+    @Transactional(readOnly = true)
+    public SagaState getSagaState(String orderId) {
+        return sagaStateRepository.findBySagaId(orderId)
+            .orElseThrow(() -> new OrderNotFoundException("Saga state not found for order: " + orderId));
     }
 
 }

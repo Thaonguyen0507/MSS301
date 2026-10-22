@@ -4,7 +4,10 @@ import com.example.order_service.dto.InventoryRequest;
 import com.example.order_service.dto.PaymentRequest;
 import com.example.order_service.dto.PaymentRefundRequest;
 import com.example.order_service.model.Order;
+import com.example.order_service.model.SagaState;
 import com.example.order_service.repository.OrderRepository;
+import com.example.order_service.repository.SagaStateRepository;
+import java.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,6 +24,7 @@ public class SagaOrchestrator {
 
     private final RestTemplate restTemplate;
     private final OrderRepository orderRepository;
+    private final SagaStateRepository sagaStateRepository;
 
     @Value("${external-services.inventory-url}")
     private String inventoryServiceUrl;
@@ -29,21 +33,35 @@ public class SagaOrchestrator {
     private String paymentServiceUrl;
 
     public SagaOrchestrator(RestTemplate restTemplate,
-                            OrderRepository orderRepository) {
+                            OrderRepository orderRepository,
+                            SagaStateRepository sagaStateRepository) {
         this.restTemplate = restTemplate;
         this.orderRepository = orderRepository;
+        this.sagaStateRepository = sagaStateRepository;
     }
 
     public void executeSaga(Order order, String correlationId) {
         String orderId = order.getId();
         log.info("[CorrelationId: {}] [OrderId: {}] Starting saga orchestration", correlationId, orderId);
 
+        SagaState sagaState = new SagaState(orderId, "INIT", "EXECUTING", null, LocalDateTime.now());
+        sagaStateRepository.save(sagaState);
+
         try {
             log.info("[CorrelationId: {}] [OrderId: {}] [Step: INIT] Attempting to reserve inventory", correlationId, orderId);
             reserveInventory(order, correlationId);
+
+            sagaState.setCurrentStep("INVENTORY_RESERVED");
+            sagaState.setUpdatedAt(LocalDateTime.now());
+            sagaStateRepository.save(sagaState);
             log.info("[CorrelationId: {}] [OrderId: {}] [Step: INVENTORY_RESERVED] Inventory reserved successfully", correlationId, orderId);
         } catch (Exception ex) {
             log.error("[CorrelationId: {}] [OrderId: {}] [Step: INIT] Inventory reservation failed: {}", correlationId, orderId, ex.getMessage(), ex);
+
+            sagaState.setStatus("FAILED");
+            sagaState.setFailureReason(ex.getMessage());
+            sagaState.setUpdatedAt(LocalDateTime.now());
+            sagaStateRepository.save(sagaState);
 
             order.setStatus("FAILED");
             orderRepository.save(order);
@@ -53,9 +71,18 @@ public class SagaOrchestrator {
         try {
             log.info("[CorrelationId: {}] [OrderId: {}] [Step: INVENTORY_RESERVED] Attempting to process payment", correlationId, orderId);
             processPayment(order, correlationId);
+
+            sagaState.setCurrentStep("PAYMENT_DONE");
+            sagaState.setUpdatedAt(LocalDateTime.now());
+            sagaStateRepository.save(sagaState);
             log.info("[CorrelationId: {}] [OrderId: {}] [Step: PAYMENT_DONE] Payment processed successfully", correlationId, orderId);
         } catch (Exception ex) {
             log.error("[CorrelationId: {}] [OrderId: {}] [Step: INVENTORY_RESERVED] Payment processing failed: {}", correlationId, orderId, ex.getMessage(), ex);
+
+            sagaState.setStatus("COMPENSATING");
+            sagaState.setFailureReason(ex.getMessage());
+            sagaState.setUpdatedAt(LocalDateTime.now());
+            sagaStateRepository.save(sagaState);
 
             log.info("[CorrelationId: {}] [OrderId: {}] [Step: INVENTORY_RESERVED] Starting compensation: releasing inventory", correlationId, orderId);
             try {
@@ -65,10 +92,18 @@ public class SagaOrchestrator {
                 log.error("[CorrelationId: {}] [OrderId: {}] [Step: INVENTORY_RESERVED] Compensation failed: inventory release error: {}", correlationId, orderId, compEx.getMessage(), compEx);
             }
 
+            sagaState.setStatus("COMPENSATED");
+            sagaState.setUpdatedAt(LocalDateTime.now());
+            sagaStateRepository.save(sagaState);
+
             order.setStatus("COMPENSATED");
             orderRepository.save(order);
             return;
         }
+
+        sagaState.setStatus("COMPLETED");
+        sagaState.setUpdatedAt(LocalDateTime.now());
+        sagaStateRepository.save(sagaState);
 
         order.setStatus("COMPLETED");
         orderRepository.save(order);
