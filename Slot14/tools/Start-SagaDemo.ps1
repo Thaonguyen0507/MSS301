@@ -1,4 +1,9 @@
-param([switch]$Build)
+param(
+    [switch]$Build,
+    [ValidateRange(1024,65535)][int]$OrderPort = 8081,
+    [ValidateRange(1024,65535)][int]$InventoryPort = 8082,
+    [ValidateRange(1024,65535)][int]$PaymentPort = 8083
+)
 $ErrorActionPreference = 'Stop'
 $slotRoot = Split-Path -Parent $PSScriptRoot
 $demoRoot = Join-Path $slotRoot 'saga-demo'
@@ -30,7 +35,8 @@ try {
         if ((Get-Date) -gt $deadline) { throw 'Databases did not become healthy; inspect docker compose logs' }
         Start-Sleep -Seconds 3
     } while ($true)
-    $ports = @(8081,8082,8083)
+    $ports = @($OrderPort,$InventoryPort,$PaymentPort)
+    if (@($ports | Select-Object -Unique).Count -ne 3) { throw 'Each service requires a distinct port' }
     $busy = Get-NetTCPConnection -State Listen -ErrorAction SilentlyContinue | Where-Object { $_.LocalPort -in $ports }
     if ($busy) { throw 'A required port is in use. Stop-SagaDemo.ps1 only stops processes started by this script.' }
     $processes = @()
@@ -43,11 +49,17 @@ try {
         }
         $jar = Join-Path $serviceRoot "target\$service-0.0.1-SNAPSHOT.jar"
         if (!(Test-Path -LiteralPath $jar)) { throw "Missing jar: run with -Build" }
-        $process = Start-Process -FilePath $javaExecutable -ArgumentList @('-Xmx256m','-Dfile.encoding=UTF-8','-Duser.timezone=Asia/Ho_Chi_Minh','-jar',$jar) -WorkingDirectory $serviceRoot -WindowStyle Hidden -RedirectStandardOutput (Join-Path $evidenceRoot "$service.stdout.log") -RedirectStandardError (Join-Path $evidenceRoot "$service.stderr.log") -PassThru
+        $port = switch ($service) { 'order-service' { $OrderPort }; 'inventory-service' { $InventoryPort }; 'payment-service' { $PaymentPort } }
+        $javaArgs = @('-Xmx256m','-Dfile.encoding=UTF-8','-Duser.timezone=Asia/Ho_Chi_Minh','-jar',$jar,"--server.port=$port","--logging.file.name=$evidenceRoot\$service.application.log",'--logging.charset.file=UTF-8')
+        if ($service -eq 'order-service') {
+            $javaArgs += "--services.inventory.url=http://localhost:$InventoryPort"
+            $javaArgs += "--services.payment.url=http://localhost:$PaymentPort"
+        }
+        $process = Start-Process -FilePath $javaExecutable -ArgumentList $javaArgs -WorkingDirectory $serviceRoot -WindowStyle Hidden -RedirectStandardOutput (Join-Path $evidenceRoot "$service.stdout.log") -RedirectStandardError (Join-Path $evidenceRoot "$service.stderr.log") -PassThru
         $processes += [pscustomobject]@{service=$service;pid=$process.Id;jar=$jar}
         $processes | ConvertTo-Json | Set-Content -Encoding utf8 (Join-Path $evidenceRoot 'processes.json')
     }
-    $endpoints = @('http://localhost:8082/api/inventory/products','http://localhost:8083/api/payments/wallets','http://localhost:8081/api/orders')
+    $endpoints = @("http://localhost:$InventoryPort/api/inventory/products","http://localhost:$PaymentPort/api/payments/wallets","http://localhost:$OrderPort/api/orders")
     foreach ($endpoint in $endpoints) {
         $deadline = (Get-Date).AddMinutes(2)
         while ($true) {
@@ -56,5 +68,5 @@ try {
             Start-Sleep -Seconds 2
         }
     }
-    Write-Host 'Saga ready: order 8081, inventory 8082, payment 8083'
+    Write-Host "Saga ready: order $OrderPort, inventory $InventoryPort, payment $PaymentPort"
 } finally { Pop-Location }

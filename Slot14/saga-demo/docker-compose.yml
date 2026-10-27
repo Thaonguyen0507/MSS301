@@ -7,13 +7,14 @@ services:
     container_name: slot14-saga-mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_HOST: "%"
       MYSQL_DATABASE: orderdb
     ports:
       - "3307:3306"            # host 3307 để không đụng MySQL cài sẵn trên máy
     volumes:
       - mysql-data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      test: ["CMD", "mysql", "-h", "localhost", "-uroot", "-proot", "orderdb", "-Nse", "SELECT 1"]
       interval: 5s
       timeout: 5s
       retries: 20
