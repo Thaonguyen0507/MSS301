@@ -1,0 +1,33 @@
+{
+  "verifiedAt": "2026-10-27T12:53:28.690Z",
+  "scope": "Compilation and packaging only. No HTTP or Postman/Newman scenario execution.",
+  "builds": [
+    {
+      "service": "inventory-service",
+      "springBoot": "4.1.1",
+      "javaTarget": 21,
+      "command": "mvnw.cmd -B -DskipTests package",
+      "result": "BUILD SUCCESS",
+      "testsExecuted": false,
+      "finishedAt": "2026-10-27T19:28:58+07:00"
+    },
+    {
+      "service": "payment-service",
+      "springBoot": "4.1.1",
+      "javaTarget": 21,
+      "command": "mvnw.cmd -B -DskipTests package",
+      "result": "BUILD SUCCESS",
+      "testsExecuted": false,
+      "finishedAt": "2026-10-27T19:32:22+07:00"
+    },
+    {
+      "service": "order-service",
+      "springBoot": "4.1.1",
+      "javaTarget": 21,
+      "command": "mvnw.cmd -B -DskipTests package",
+      "result": "BUILD SUCCESS",
+      "testsExecuted": false,
+      "finishedAt": "2026-10-27T19:32:09+07:00"
+    }
+  ]
+}
