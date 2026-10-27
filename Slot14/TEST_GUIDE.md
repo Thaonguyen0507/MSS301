@@ -2,7 +2,9 @@
 
 ## Trạng thái hiện tại
 
-Đã build thành công ba service theo guide và chuẩn bị prompt/collection. Theo yêu cầu, không tiếp tục chạy Docker hoặc kiểm thử HTTP trong đợt này. Chưa có kết quả Postman/Newman và chưa xác nhận KB1–KB8 PASS. Các trạng thái và số liệu trong prompt là **kết quả mong đợi theo guide** để đối chiếu khi chạy.
+Đã chạy thật KB1 và KB2 bằng Newman 6.2.3 ngày 27/10/2026: **20 request, 47 assertion, 0 lỗi**. KB1 là order **5**, KB2 là order **6**. Ba database Docker healthy; các service chạy trên cổng **18081–18083** để tránh ứng dụng khác đang dùng 8081–8082. KB3–KB8 chưa được chạy trong đợt này.
+
+Ảnh báo cáo từ kết quả thật nằm trong `test-evidence/images/`; đây là ảnh được xuất từ dữ liệu Newman, không phải ảnh chụp giao diện Postman Desktop. Xem `TEST_RESULTS_KB1_KB2.md` để dùng số liệu và chú thích khi viết Word.
 
 Bạn tự soạn báo cáo Word; các file ở đây cung cấp quy trình, request và assertion để sử dụng cho báo cáo đó.
 
@@ -26,6 +28,12 @@ Máy cần Java 21 trở lên, Docker Desktop Linux containers và dung lượng
 powershell -ExecutionPolicy Bypass -File .\Slot14\tools\Start-SagaDemo.ps1 -Build
 ```
 
+Nếu cổng mặc định đã có ứng dụng khác, dùng cổng riêng như lần chạy đã ghi nhận:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\Slot14\tools\Start-SagaDemo.ps1 -OrderPort 18081 -InventoryPort 18082 -PaymentPort 18083
+```
+
 Script dùng cách A của guide: database chạy Docker, service chạy Java trên host. Log service nằm ở `Slot14/test-evidence/`. Các container có tên riêng `slot14-saga-*` để không dùng nhầm database của bài khác.
 
 Cách B của guide cũng được cấu hình:
@@ -40,7 +48,7 @@ Chọn một cách, không chạy cả A và B. Không chạy `docker compose do
 ## Chạy Postman
 
 1. Import `postman/Saga_KB1_KB8.postman_collection.json` vào Postman Desktop.
-2. Kiểm tra collection variables: orderUrl 8081, inventoryUrl 8082, paymentUrl 8083.
+2. Nếu dùng cổng mặc định theo guide: orderUrl 8081, inventoryUrl 8082, paymentUrl 8083. Với môi trường của lần chạy đã ghi nhận, đặt lần lượt `http://localhost:18081`, `http://localhost:18082`, `http://localhost:18083`.
 3. Mở Postman Console để xem request/response. Không ghi đè các ID được script lưu.
 4. Run collection: chỉ chọn `0 - Service readiness`, `KB1 - Happy path`, `KB2 - Thanh toán thất bại 402` để chạy hai ca được chọn cho báo cáo. Bỏ chọn các folder khác và folder Manual.
 5. Xem **Test Results**, response và endpoint saga-logs cho mỗi orderId. Lưu ảnh Postman nếu cần nộp minh chứng giao diện. Nếu dùng Newman, ghi rõ công cụ đó khi lập báo cáo.
@@ -58,7 +66,13 @@ npm.cmd install --prefix .\Slot14\.tools\newman newman --no-audit --no-fund
 node .\Slot14\tools\run-selected-tests.cjs
 ```
 
-Sau khi thực sự chạy script, `test-evidence/KB1-KB2-results.json` sẽ chứa từng URL, body, response và assertion; `newman-KB1-KB2.json` sẽ là output Newman đầy đủ. Hiện chưa có hai file kết quả này. Các bước dùng snapshot để kiểm tra chênh lệch; KB1 cần đủ tồn kho/số dư nếu chạy lại nhiều lần.
+Với cổng riêng:
+
+```powershell
+node .\Slot14\tools\run-selected-tests.cjs --order-url http://localhost:18081 --inventory-url http://localhost:18082 --payment-url http://localhost:18083
+```
+
+`test-evidence/KB1-KB2-results.json` chứa từng URL, body, response và assertion; `newman-KB1-KB2.json` là output Newman đầy đủ của lần chạy. Các bước dùng snapshot để kiểm tra chênh lệch; KB1 cần đủ tồn kho/số dư nếu chạy lại nhiều lần. Các test script được giới hạn phạm vi biến riêng cho từng request để chạy liên tiếp trong Newman.
 
 ## Xem và dừng service
 

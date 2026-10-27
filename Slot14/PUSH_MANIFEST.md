@@ -1,6 +1,6 @@
 ﻿# Danh sách file dự định push cho Slot14
 
-Nhánh: `feat/slot14-saga-test-report`. Đây là danh sách 82 file đã được duyệt để commit và push. Draft PR về `main` được giữ để bạn bổ sung Word và tài liệu trước khi merge.
+Nhánh: `feat/slot14-saga-test-report`. Danh sách ban đầu gồm 82 file đã được duyệt và push. Đợt kiểm thử thực tế bổ sung 12 file bằng chứng/công cụ bên dưới, tổng cộng 94 file. Draft PR về `main` được giữ để bạn bổ sung Word và tài liệu trước khi merge.
 
 ## Phạm vi
 
@@ -23,15 +23,15 @@ Nhánh: `feat/slot14-saga-test-report`. Đây là danh sách 82 file đã đư�
 - Ba Maven package BUILD SUCCESS, có dùng skipTests.
 - Collection JSON và 10 body JSON hợp lệ; 78 post-response script parse được.
 - Node runner và hai script PowerShell parse được.
-- Chưa thực thi HTTP hoặc chạy Postman/Newman.
+- Đã chạy KB1 và KB2 bằng Newman 6.2.3 ngày 27/10/2026: 20 request, 47 assertion, 0 lỗi; orderId 5 và 6. KB3–KB8 chưa chạy.
 
 ## Commit dự kiến
 
-Theo Conventional Commits, tiêu đề viết thường, dạng mệnh lệnh, tối đa 50 ký tự. Tách phần build, inventory, payment, order saga, collection và tài liệu. Commit test chỉ ghi chuẩn bị kiểm tra, không ghi đã PASS.
+Theo Conventional Commits, tiêu đề viết thường, dạng mệnh lệnh, tối đa 50 ký tự. Tách phần build, inventory, payment, order saga, collection và tài liệu. Commit ban đầu ghi chuẩn bị kiểm tra; các commit bổ sung lưu kết quả thực thi và ảnh của KB1/KB2.
 
 ## Danh sách đầy đủ
 
-Tổng cộng **82 file** dự định đưa vào Git.
+**82 file của đợt push đầu**:
 
 ```text
 Slot14/.gitignore
@@ -117,3 +117,24 @@ Slot14/tools/Stop-SagaDemo.ps1
 Slot14/tools/create-postman-collection.cjs
 Slot14/tools/run-selected-tests.cjs
 ```
+
+## Bổ sung sau khi kiểm thử thực tế
+
+Đã sửa healthcheck MySQL, hỗ trợ cổng riêng và log UTF8, giới hạn phạm vi biến của test script trong collection. 12 file mới được bổ sung cùng những sửa đổi này:
+
+```text
+Slot14/TEST_RESULTS_KB1_KB2.md
+Slot14/test-evidence/KB1-KB2-results.json
+Slot14/test-evidence/images/00-newman-summary.png
+Slot14/test-evidence/images/01-KB1-response.png
+Slot14/test-evidence/images/02-KB1-data-saga.png
+Slot14/test-evidence/images/03-KB2-response-402.png
+Slot14/test-evidence/images/04-KB2-data-saga.png
+Slot14/test-evidence/images/05-service-logs.png
+Slot14/test-evidence/images/image-manifest.json
+Slot14/test-evidence/newman-KB1-KB2.json
+Slot14/test-evidence/service-log-excerpts.txt
+Slot14/tools/export-newman-images.py
+```
+
+Ảnh là báo cáo xuất từ kết quả Newman thật theo lựa chọn của người dùng, không phải ảnh chụp giao diện Postman Desktop. File ZIP tiện tải về được tạo cục bộ; Git lưu từng ảnh PNG và dữ liệu gốc.
