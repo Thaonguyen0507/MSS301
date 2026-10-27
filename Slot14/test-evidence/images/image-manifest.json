@@ -1,0 +1,15 @@
+{
+  "source": "KB1-KB2-results.json",
+  "sourceSha256": "73a5482696eb6ac3a5e800fd7d4e20b63ba84db45e477f21b62d2691a2985cc9",
+  "executedAt": "2026-10-27T13:29:54.591Z",
+  "tool": "Newman 6.2.3",
+  "images": [
+    "00-newman-summary.png",
+    "01-KB1-response.png",
+    "02-KB1-data-saga.png",
+    "03-KB2-response-402.png",
+    "04-KB2-data-saga.png",
+    "05-service-logs.png"
+  ],
+  "format": "Rendered report from actual Newman results, not Postman Desktop screenshots"
+}

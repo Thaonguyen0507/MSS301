@@ -1,0 +1,12 @@
+{
+  "verifiedAt": "2026-10-27T12:53:28.698Z",
+  "collection": "Slot14 Saga KB1 KB8",
+  "requests": 78,
+  "postResponseScripts": 78,
+  "jsonBodies": 10,
+  "jsonValid": true,
+  "scriptsParse": true,
+  "httpExecuted": false,
+  "scenariosPassed": null,
+  "notes": "JavaScript scripts were parsed, not executed with pm. PowerShell scripts and Node runner also passed syntax checks."
+}

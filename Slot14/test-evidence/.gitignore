@@ -1,0 +1,4 @@
+processes.json
+*.stdout.log
+*.stderr.log
+*.application.log
