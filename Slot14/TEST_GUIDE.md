@@ -6,7 +6,7 @@
 
 Ảnh báo cáo từ kết quả thật nằm trong `test-evidence/images/`; đây là ảnh được xuất từ dữ liệu Newman, không phải ảnh chụp giao diện Postman Desktop. Xem `TEST_RESULTS_KB1_KB2.md` để dùng số liệu và chú thích khi viết Word.
 
-Bạn tự soạn báo cáo Word; các file ở đây cung cấp quy trình, request và assertion để sử dụng cho báo cáo đó.
+Báo cáo Word rút gọn nằm tại [Slot14_DE190669.docx](Slot14_DE190669.docx), gồm phần giới thiệu và 6 ảnh bằng chứng. Các file ở đây cung cấp quy trình, request và assertion tương ứng.
 
 ## Bản dùng cho bài Slot14
 

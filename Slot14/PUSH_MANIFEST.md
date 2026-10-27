@@ -1,6 +1,6 @@
 ﻿# Danh sách file dự định push cho Slot14
 
-Nhánh: `feat/slot14-saga-test-report`. Danh sách ban đầu gồm 82 file đã được duyệt và push. Đợt kiểm thử thực tế bổ sung 12 file bằng chứng/công cụ bên dưới, tổng cộng 94 file. Draft PR về `main` được giữ để bạn bổ sung Word và tài liệu trước khi merge.
+Nhánh: `feat/slot14-saga-test-report`. Danh sách ban đầu gồm 82 file đã được duyệt và push. Đợt kiểm thử thực tế bổ sung 12 file bằng chứng/công cụ bên dưới và báo cáo Word đã được duyệt, tổng cộng 95 file trong PR.
 
 ## Phạm vi
 
@@ -8,7 +8,7 @@ Nhánh: `feat/slot14-saga-test-report`. Danh sách ban đầu gồm 82 file đã
 - Collection Postman cùng assertion và runner Newman.
 - Mã nguồn ba service theo Saga_guide, Spring Boot 4.1.1 và cấu hình hạ tầng để tái lập sau này.
 - Kết quả build và kiểm tra cú pháp đã thực hiện; không ghi các ca HTTP chưa chạy là PASS.
-- Không có file Word; bạn tự viết.
+- Báo cáo Word: `Slot14/Slot14_DE190669.docx`, gồm 6 trang và 6 ảnh bằng chứng từ kết quả Newman thật.
 
 ## Không đưa vào push
 
@@ -138,3 +138,7 @@ Slot14/tools/export-newman-images.py
 ```
 
 Ảnh là báo cáo xuất từ kết quả Newman thật theo lựa chọn của người dùng, không phải ảnh chụp giao diện Postman Desktop. File ZIP tiện tải về được tạo cục bộ; Git lưu từng ảnh PNG và dữ liệu gốc.
+
+## Bổ sung báo cáo Word
+
+`Slot14/Slot14_DE190669.docx` dùng bố cục từ báo cáo Assignment1, gồm phần giới thiệu ngắn, thông tin sinh viên DE190669 và 6 ảnh kết quả KB1–KB2. Không đưa file khóa Word (`~$...docx`) hoặc bản render tạm vào Git.
