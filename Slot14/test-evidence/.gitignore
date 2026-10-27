@@ -1,0 +1,5 @@
+processes.json
+*.stdout.log
+*.stderr.log
+newman-KB1-KB2.json
+KB1-KB2-results.json
