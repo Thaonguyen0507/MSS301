@@ -36,7 +36,9 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));"
+                  "(() => {",
+                  "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
+                  "})();"
                 ]
               }
             }
@@ -56,7 +58,9 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));"
+                  "(() => {",
+                  "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
+                  "})();"
                 ]
               }
             }
@@ -76,7 +80,9 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));"
+                  "(() => {",
+                  "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
+                  "})();"
                 ]
               }
             }
@@ -102,9 +108,11 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
-                  "if(Array.isArray(data)) for(const p of data) pm.collectionVariables.set(\"KB1_stock_\"+p.id,p.stock);"
+                  "if(Array.isArray(data)) for(const p of data) pm.collectionVariables.set(\"KB1_stock_\"+p.id,p.stock);",
+                  "})();"
                 ]
               }
             }
@@ -124,9 +132,11 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
-                  "if(Array.isArray(data)) for(const w of data) pm.collectionVariables.set(\"KB1_balance_\"+w.customerId,w.balance);"
+                  "if(Array.isArray(data)) for(const w of data) pm.collectionVariables.set(\"KB1_balance_\"+w.customerId,w.balance);",
+                  "})();"
                 ]
               }
             }
@@ -160,12 +170,14 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "if(data&&data.id) pm.collectionVariables.set(\"kb1OrderId\",data.id);",
                   "pm.test(\"Order status đúng\",()=>pm.expect(data.status).to.eql(\"CONFIRMED\"));",
                   "pm.test(\"Saga status đúng\",()=>pm.expect(data.sagaStatus).to.eql(\"COMPLETED\"));",
-                  "pm.test(\"Không có failureReason\",()=>pm.expect(data.failureReason).to.be.null);"
+                  "pm.test(\"Không có failureReason\",()=>pm.expect(data.failureReason).to.be.null);",
+                  "})();"
                 ]
               }
             }
@@ -185,10 +197,12 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "const delta={\"P1\":-2};",
-                  "for(const id of [\"P1\",\"P2\"]) { const p=Array.isArray(data)&&data.find(x=>x.id===id); const b=Number(pm.collectionVariables.get(\"KB1_stock_\"+id)); pm.test(\"Stock \"+id+\" đúng độ chênh lệch\",()=>pm.expect(p&&p.stock).to.eql(b+(delta[id]||0))); }"
+                  "for(const id of [\"P1\",\"P2\"]) { const p=Array.isArray(data)&&data.find(x=>x.id===id); const b=Number(pm.collectionVariables.get(\"KB1_stock_\"+id)); pm.test(\"Stock \"+id+\" đúng độ chênh lệch\",()=>pm.expect(p&&p.stock).to.eql(b+(delta[id]||0))); }",
+                  "})();"
                 ]
               }
             }
@@ -208,10 +222,12 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "const delta={\"C1\":-2000};",
-                  "for(const id of [\"C1\",\"C2\"]) { const w=Array.isArray(data)&&data.find(x=>x.customerId===id); const b=Number(pm.collectionVariables.get(\"KB1_balance_\"+id)); pm.test(\"Balance \"+id+\" đúng độ chênh lệch\",()=>pm.expect(w&&w.balance).to.eql(b+(delta[id]||0))); }"
+                  "for(const id of [\"C1\",\"C2\"]) { const w=Array.isArray(data)&&data.find(x=>x.customerId===id); const b=Number(pm.collectionVariables.get(\"KB1_balance_\"+id)); pm.test(\"Balance \"+id+\" đúng độ chênh lệch\",()=>pm.expect(w&&w.balance).to.eql(b+(delta[id]||0))); }",
+                  "})();"
                 ]
               }
             }
@@ -231,10 +247,12 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "const r=data.find(x=>String(x.orderId)===String(pm.collectionVariables.get(\"kb1OrderId\")));",
-                  "pm.test(\"Reservation đúng\",()=>pm.expect(r&&r.status).to.eql(\"RESERVED\"));"
+                  "pm.test(\"Reservation đúng\",()=>pm.expect(r&&r.status).to.eql(\"RESERVED\"));",
+                  "})();"
                 ]
               }
             }
@@ -254,10 +272,12 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "const p=data.find(x=>String(x.orderId)===String(pm.collectionVariables.get(\"kb1OrderId\")));",
-                  "pm.test(\"Payment đúng\",()=>pm.expect(p&&p.status).to.eql(\"PAID\"));"
+                  "pm.test(\"Payment đúng\",()=>pm.expect(p&&p.status).to.eql(\"PAID\"));",
+                  "})();"
                 ]
               }
             }
@@ -277,12 +297,14 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "pm.test(\"Đúng thứ tự saga steps\",()=>pm.expect(data.map(x=>x.step)).to.eql([\"CREATE_ORDER\",\"RESERVE_INVENTORY\",\"PROCESS_PAYMENT\",\"CONFIRM_ORDER\"]));",
                   "pm.test(\"Log cùng orderId\",()=>pm.expect(data.every(x=>String(x.orderId)===String(pm.collectionVariables.get(\"kb1OrderId\")))).to.eql(true));",
                   "pm.test(\"Time ISO hợp lệ\",()=>pm.expect(data.every(x=>typeof x.time===\"string\"&&!Number.isNaN(Date.parse(x.time)))).to.eql(true));",
-                  "pm.test(\"Mọi step SUCCESS\",()=>pm.expect(data.every(x=>x.result===\"SUCCESS\")).to.eql(true));"
+                  "pm.test(\"Mọi step SUCCESS\",()=>pm.expect(data.every(x=>x.result===\"SUCCESS\")).to.eql(true));",
+                  "})();"
                 ]
               }
             }
@@ -308,9 +330,11 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
-                  "if(Array.isArray(data)) for(const p of data) pm.collectionVariables.set(\"KB2_stock_\"+p.id,p.stock);"
+                  "if(Array.isArray(data)) for(const p of data) pm.collectionVariables.set(\"KB2_stock_\"+p.id,p.stock);",
+                  "})();"
                 ]
               }
             }
@@ -330,9 +354,11 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
-                  "if(Array.isArray(data)) for(const w of data) pm.collectionVariables.set(\"KB2_balance_\"+w.customerId,w.balance);"
+                  "if(Array.isArray(data)) for(const w of data) pm.collectionVariables.set(\"KB2_balance_\"+w.customerId,w.balance);",
+                  "})();"
                 ]
               }
             }
@@ -366,12 +392,14 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "if(data&&data.id) pm.collectionVariables.set(\"kb2OrderId\",data.id);",
                   "pm.test(\"Order status đúng\",()=>pm.expect(data.status).to.eql(\"CANCELLED\"));",
                   "pm.test(\"Saga status đúng\",()=>pm.expect(data.sagaStatus).to.eql(\"COMPENSATED\"));",
-                  "pm.test(\"Failure reason đúng\",()=>pm.expect(data.failureReason).to.match(/^402/));"
+                  "pm.test(\"Failure reason đúng\",()=>pm.expect(data.failureReason).to.match(/^402/));",
+                  "})();"
                 ]
               }
             }
@@ -391,10 +419,12 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "const delta={};",
-                  "for(const id of [\"P1\",\"P2\"]) { const p=Array.isArray(data)&&data.find(x=>x.id===id); const b=Number(pm.collectionVariables.get(\"KB2_stock_\"+id)); pm.test(\"Stock \"+id+\" đúng độ chênh lệch\",()=>pm.expect(p&&p.stock).to.eql(b+(delta[id]||0))); }"
+                  "for(const id of [\"P1\",\"P2\"]) { const p=Array.isArray(data)&&data.find(x=>x.id===id); const b=Number(pm.collectionVariables.get(\"KB2_stock_\"+id)); pm.test(\"Stock \"+id+\" đúng độ chênh lệch\",()=>pm.expect(p&&p.stock).to.eql(b+(delta[id]||0))); }",
+                  "})();"
                 ]
               }
             }
@@ -414,10 +444,12 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "const delta={};",
-                  "for(const id of [\"C1\",\"C2\"]) { const w=Array.isArray(data)&&data.find(x=>x.customerId===id); const b=Number(pm.collectionVariables.get(\"KB2_balance_\"+id)); pm.test(\"Balance \"+id+\" đúng độ chênh lệch\",()=>pm.expect(w&&w.balance).to.eql(b+(delta[id]||0))); }"
+                  "for(const id of [\"C1\",\"C2\"]) { const w=Array.isArray(data)&&data.find(x=>x.customerId===id); const b=Number(pm.collectionVariables.get(\"KB2_balance_\"+id)); pm.test(\"Balance \"+id+\" đúng độ chênh lệch\",()=>pm.expect(w&&w.balance).to.eql(b+(delta[id]||0))); }",
+                  "})();"
                 ]
               }
             }
@@ -437,10 +469,12 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "const r=data.find(x=>String(x.orderId)===String(pm.collectionVariables.get(\"kb2OrderId\")));",
-                  "pm.test(\"Reservation đúng\",()=>pm.expect(r&&r.status).to.eql(\"RELEASED\"));"
+                  "pm.test(\"Reservation đúng\",()=>pm.expect(r&&r.status).to.eql(\"RELEASED\"));",
+                  "})();"
                 ]
               }
             }
@@ -460,10 +494,12 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "const p=data.find(x=>String(x.orderId)===String(pm.collectionVariables.get(\"kb2OrderId\")));",
-                  "pm.test(\"Payment đúng\",()=>pm.expect(p).to.eql(undefined));"
+                  "pm.test(\"Payment đúng\",()=>pm.expect(p).to.eql(undefined));",
+                  "})();"
                 ]
               }
             }
@@ -483,12 +519,14 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "pm.test(\"Đúng thứ tự saga steps\",()=>pm.expect(data.map(x=>x.step)).to.eql([\"CREATE_ORDER\",\"RESERVE_INVENTORY\",\"SAGA\",\"COMPENSATION\",\"CANCEL_ORDER\"]));",
                   "pm.test(\"Log cùng orderId\",()=>pm.expect(data.every(x=>String(x.orderId)===String(pm.collectionVariables.get(\"kb2OrderId\")))).to.eql(true));",
                   "pm.test(\"Time ISO hợp lệ\",()=>pm.expect(data.every(x=>typeof x.time===\"string\"&&!Number.isNaN(Date.parse(x.time)))).to.eql(true));",
-                  "pm.test(\"Có SAGA FAILED và kết thúc CANCEL_ORDER SUCCESS\",()=>{pm.expect(data.find(x=>x.step===\"SAGA\").result).to.eql(\"FAILED\");pm.expect(data[data.length-1].result).to.eql(\"SUCCESS\");});"
+                  "pm.test(\"Có SAGA FAILED và kết thúc CANCEL_ORDER SUCCESS\",()=>{pm.expect(data.find(x=>x.step===\"SAGA\").result).to.eql(\"FAILED\");pm.expect(data[data.length-1].result).to.eql(\"SUCCESS\");});",
+                  "})();"
                 ]
               }
             }
@@ -522,8 +560,10 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP payment 402\",()=>pm.response.to.have.status(402));",
-                  "const e=pm.response.json();pm.test(\"Lý do số dư không đủ\",()=>pm.expect(e.message).to.include(\"Số dư không đủ\"));"
+                  "const e=pm.response.json();pm.test(\"Lý do số dư không đủ\",()=>pm.expect(e.message).to.include(\"Số dư không đủ\"));",
+                  "})();"
                 ]
               }
             }
@@ -549,9 +589,11 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
-                  "if(Array.isArray(data)) for(const p of data) pm.collectionVariables.set(\"KB3_stock_\"+p.id,p.stock);"
+                  "if(Array.isArray(data)) for(const p of data) pm.collectionVariables.set(\"KB3_stock_\"+p.id,p.stock);",
+                  "})();"
                 ]
               }
             }
@@ -571,9 +613,11 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
-                  "if(Array.isArray(data)) for(const w of data) pm.collectionVariables.set(\"KB3_balance_\"+w.customerId,w.balance);"
+                  "if(Array.isArray(data)) for(const w of data) pm.collectionVariables.set(\"KB3_balance_\"+w.customerId,w.balance);",
+                  "})();"
                 ]
               }
             }
@@ -607,12 +651,14 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "if(data&&data.id) pm.collectionVariables.set(\"kb3OrderId\",data.id);",
                   "pm.test(\"Order status đúng\",()=>pm.expect(data.status).to.eql(\"CANCELLED\"));",
                   "pm.test(\"Saga status đúng\",()=>pm.expect(data.sagaStatus).to.eql(\"COMPENSATED\"));",
-                  "pm.test(\"Failure reason đúng\",()=>pm.expect(data.failureReason).to.match(/^409/));"
+                  "pm.test(\"Failure reason đúng\",()=>pm.expect(data.failureReason).to.match(/^409/));",
+                  "})();"
                 ]
               }
             }
@@ -632,10 +678,12 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "const delta={};",
-                  "for(const id of [\"P1\",\"P2\"]) { const p=Array.isArray(data)&&data.find(x=>x.id===id); const b=Number(pm.collectionVariables.get(\"KB3_stock_\"+id)); pm.test(\"Stock \"+id+\" đúng độ chênh lệch\",()=>pm.expect(p&&p.stock).to.eql(b+(delta[id]||0))); }"
+                  "for(const id of [\"P1\",\"P2\"]) { const p=Array.isArray(data)&&data.find(x=>x.id===id); const b=Number(pm.collectionVariables.get(\"KB3_stock_\"+id)); pm.test(\"Stock \"+id+\" đúng độ chênh lệch\",()=>pm.expect(p&&p.stock).to.eql(b+(delta[id]||0))); }",
+                  "})();"
                 ]
               }
             }
@@ -655,10 +703,12 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "const delta={};",
-                  "for(const id of [\"C1\",\"C2\"]) { const w=Array.isArray(data)&&data.find(x=>x.customerId===id); const b=Number(pm.collectionVariables.get(\"KB3_balance_\"+id)); pm.test(\"Balance \"+id+\" đúng độ chênh lệch\",()=>pm.expect(w&&w.balance).to.eql(b+(delta[id]||0))); }"
+                  "for(const id of [\"C1\",\"C2\"]) { const w=Array.isArray(data)&&data.find(x=>x.customerId===id); const b=Number(pm.collectionVariables.get(\"KB3_balance_\"+id)); pm.test(\"Balance \"+id+\" đúng độ chênh lệch\",()=>pm.expect(w&&w.balance).to.eql(b+(delta[id]||0))); }",
+                  "})();"
                 ]
               }
             }
@@ -678,10 +728,12 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "const r=data.find(x=>String(x.orderId)===String(pm.collectionVariables.get(\"kb3OrderId\")));",
-                  "pm.test(\"Reservation đúng\",()=>pm.expect(r).to.eql(undefined));"
+                  "pm.test(\"Reservation đúng\",()=>pm.expect(r).to.eql(undefined));",
+                  "})();"
                 ]
               }
             }
@@ -701,10 +753,12 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "const p=data.find(x=>String(x.orderId)===String(pm.collectionVariables.get(\"kb3OrderId\")));",
-                  "pm.test(\"Payment đúng\",()=>pm.expect(p).to.eql(undefined));"
+                  "pm.test(\"Payment đúng\",()=>pm.expect(p).to.eql(undefined));",
+                  "})();"
                 ]
               }
             }
@@ -724,12 +778,14 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "pm.test(\"Đúng thứ tự saga steps\",()=>pm.expect(data.map(x=>x.step)).to.eql([\"CREATE_ORDER\",\"SAGA\",\"CANCEL_ORDER\"]));",
                   "pm.test(\"Log cùng orderId\",()=>pm.expect(data.every(x=>String(x.orderId)===String(pm.collectionVariables.get(\"kb3OrderId\")))).to.eql(true));",
                   "pm.test(\"Time ISO hợp lệ\",()=>pm.expect(data.every(x=>typeof x.time===\"string\"&&!Number.isNaN(Date.parse(x.time)))).to.eql(true));",
-                  "pm.test(\"Có SAGA FAILED và kết thúc CANCEL_ORDER SUCCESS\",()=>{pm.expect(data.find(x=>x.step===\"SAGA\").result).to.eql(\"FAILED\");pm.expect(data[data.length-1].result).to.eql(\"SUCCESS\");});"
+                  "pm.test(\"Có SAGA FAILED và kết thúc CANCEL_ORDER SUCCESS\",()=>{pm.expect(data.find(x=>x.step===\"SAGA\").result).to.eql(\"FAILED\");pm.expect(data[data.length-1].result).to.eql(\"SUCCESS\");});",
+                  "})();"
                 ]
               }
             }
@@ -755,9 +811,11 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
-                  "if(Array.isArray(data)) for(const p of data) pm.collectionVariables.set(\"KB4_stock_\"+p.id,p.stock);"
+                  "if(Array.isArray(data)) for(const p of data) pm.collectionVariables.set(\"KB4_stock_\"+p.id,p.stock);",
+                  "})();"
                 ]
               }
             }
@@ -777,9 +835,11 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
-                  "if(Array.isArray(data)) for(const w of data) pm.collectionVariables.set(\"KB4_balance_\"+w.customerId,w.balance);"
+                  "if(Array.isArray(data)) for(const w of data) pm.collectionVariables.set(\"KB4_balance_\"+w.customerId,w.balance);",
+                  "})();"
                 ]
               }
             }
@@ -813,12 +873,14 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "if(data&&data.id) pm.collectionVariables.set(\"kb4OrderId\",data.id);",
                   "pm.test(\"Order status đúng\",()=>pm.expect(data.status).to.eql(\"CANCELLED\"));",
                   "pm.test(\"Saga status đúng\",()=>pm.expect(data.sagaStatus).to.eql(\"COMPENSATED\"));",
-                  "pm.test(\"Failure reason đúng\",()=>pm.expect(data.failureReason).to.match(/^404/));"
+                  "pm.test(\"Failure reason đúng\",()=>pm.expect(data.failureReason).to.match(/^404/));",
+                  "})();"
                 ]
               }
             }
@@ -838,10 +900,12 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "const delta={};",
-                  "for(const id of [\"P1\",\"P2\"]) { const p=Array.isArray(data)&&data.find(x=>x.id===id); const b=Number(pm.collectionVariables.get(\"KB4_stock_\"+id)); pm.test(\"Stock \"+id+\" đúng độ chênh lệch\",()=>pm.expect(p&&p.stock).to.eql(b+(delta[id]||0))); }"
+                  "for(const id of [\"P1\",\"P2\"]) { const p=Array.isArray(data)&&data.find(x=>x.id===id); const b=Number(pm.collectionVariables.get(\"KB4_stock_\"+id)); pm.test(\"Stock \"+id+\" đúng độ chênh lệch\",()=>pm.expect(p&&p.stock).to.eql(b+(delta[id]||0))); }",
+                  "})();"
                 ]
               }
             }
@@ -861,10 +925,12 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "const delta={};",
-                  "for(const id of [\"C1\",\"C2\"]) { const w=Array.isArray(data)&&data.find(x=>x.customerId===id); const b=Number(pm.collectionVariables.get(\"KB4_balance_\"+id)); pm.test(\"Balance \"+id+\" đúng độ chênh lệch\",()=>pm.expect(w&&w.balance).to.eql(b+(delta[id]||0))); }"
+                  "for(const id of [\"C1\",\"C2\"]) { const w=Array.isArray(data)&&data.find(x=>x.customerId===id); const b=Number(pm.collectionVariables.get(\"KB4_balance_\"+id)); pm.test(\"Balance \"+id+\" đúng độ chênh lệch\",()=>pm.expect(w&&w.balance).to.eql(b+(delta[id]||0))); }",
+                  "})();"
                 ]
               }
             }
@@ -884,10 +950,12 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "const r=data.find(x=>String(x.orderId)===String(pm.collectionVariables.get(\"kb4OrderId\")));",
-                  "pm.test(\"Reservation đúng\",()=>pm.expect(r).to.eql(undefined));"
+                  "pm.test(\"Reservation đúng\",()=>pm.expect(r).to.eql(undefined));",
+                  "})();"
                 ]
               }
             }
@@ -907,10 +975,12 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "const p=data.find(x=>String(x.orderId)===String(pm.collectionVariables.get(\"kb4OrderId\")));",
-                  "pm.test(\"Payment đúng\",()=>pm.expect(p).to.eql(undefined));"
+                  "pm.test(\"Payment đúng\",()=>pm.expect(p).to.eql(undefined));",
+                  "})();"
                 ]
               }
             }
@@ -930,12 +1000,14 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "pm.test(\"Đúng thứ tự saga steps\",()=>pm.expect(data.map(x=>x.step)).to.eql([\"CREATE_ORDER\",\"SAGA\",\"CANCEL_ORDER\"]));",
                   "pm.test(\"Log cùng orderId\",()=>pm.expect(data.every(x=>String(x.orderId)===String(pm.collectionVariables.get(\"kb4OrderId\")))).to.eql(true));",
                   "pm.test(\"Time ISO hợp lệ\",()=>pm.expect(data.every(x=>typeof x.time===\"string\"&&!Number.isNaN(Date.parse(x.time)))).to.eql(true));",
-                  "pm.test(\"Có SAGA FAILED và kết thúc CANCEL_ORDER SUCCESS\",()=>{pm.expect(data.find(x=>x.step===\"SAGA\").result).to.eql(\"FAILED\");pm.expect(data[data.length-1].result).to.eql(\"SUCCESS\");});"
+                  "pm.test(\"Có SAGA FAILED và kết thúc CANCEL_ORDER SUCCESS\",()=>{pm.expect(data.find(x=>x.step===\"SAGA\").result).to.eql(\"FAILED\");pm.expect(data[data.length-1].result).to.eql(\"SUCCESS\");});",
+                  "})();"
                 ]
               }
             }
@@ -961,9 +1033,11 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
-                  "if(Array.isArray(data)) for(const p of data) pm.collectionVariables.set(\"KB5_stock_\"+p.id,p.stock);"
+                  "if(Array.isArray(data)) for(const p of data) pm.collectionVariables.set(\"KB5_stock_\"+p.id,p.stock);",
+                  "})();"
                 ]
               }
             }
@@ -983,9 +1057,11 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
-                  "if(Array.isArray(data)) for(const w of data) pm.collectionVariables.set(\"KB5_balance_\"+w.customerId,w.balance);"
+                  "if(Array.isArray(data)) for(const w of data) pm.collectionVariables.set(\"KB5_balance_\"+w.customerId,w.balance);",
+                  "})();"
                 ]
               }
             }
@@ -1019,12 +1095,14 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "if(data&&data.id) pm.collectionVariables.set(\"kb5OrderId\",data.id);",
                   "pm.test(\"Order status đúng\",()=>pm.expect(data.status).to.eql(\"CANCELLED\"));",
                   "pm.test(\"Saga status đúng\",()=>pm.expect(data.sagaStatus).to.eql(\"COMPENSATED\"));",
-                  "pm.test(\"Failure reason đúng\",()=>pm.expect(data.failureReason).to.match(/^404/));"
+                  "pm.test(\"Failure reason đúng\",()=>pm.expect(data.failureReason).to.match(/^404/));",
+                  "})();"
                 ]
               }
             }
@@ -1044,10 +1122,12 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "const delta={};",
-                  "for(const id of [\"P1\",\"P2\"]) { const p=Array.isArray(data)&&data.find(x=>x.id===id); const b=Number(pm.collectionVariables.get(\"KB5_stock_\"+id)); pm.test(\"Stock \"+id+\" đúng độ chênh lệch\",()=>pm.expect(p&&p.stock).to.eql(b+(delta[id]||0))); }"
+                  "for(const id of [\"P1\",\"P2\"]) { const p=Array.isArray(data)&&data.find(x=>x.id===id); const b=Number(pm.collectionVariables.get(\"KB5_stock_\"+id)); pm.test(\"Stock \"+id+\" đúng độ chênh lệch\",()=>pm.expect(p&&p.stock).to.eql(b+(delta[id]||0))); }",
+                  "})();"
                 ]
               }
             }
@@ -1067,10 +1147,12 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "const delta={};",
-                  "for(const id of [\"C1\",\"C2\"]) { const w=Array.isArray(data)&&data.find(x=>x.customerId===id); const b=Number(pm.collectionVariables.get(\"KB5_balance_\"+id)); pm.test(\"Balance \"+id+\" đúng độ chênh lệch\",()=>pm.expect(w&&w.balance).to.eql(b+(delta[id]||0))); }"
+                  "for(const id of [\"C1\",\"C2\"]) { const w=Array.isArray(data)&&data.find(x=>x.customerId===id); const b=Number(pm.collectionVariables.get(\"KB5_balance_\"+id)); pm.test(\"Balance \"+id+\" đúng độ chênh lệch\",()=>pm.expect(w&&w.balance).to.eql(b+(delta[id]||0))); }",
+                  "})();"
                 ]
               }
             }
@@ -1090,10 +1172,12 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "const r=data.find(x=>String(x.orderId)===String(pm.collectionVariables.get(\"kb5OrderId\")));",
-                  "pm.test(\"Reservation đúng\",()=>pm.expect(r&&r.status).to.eql(\"RELEASED\"));"
+                  "pm.test(\"Reservation đúng\",()=>pm.expect(r&&r.status).to.eql(\"RELEASED\"));",
+                  "})();"
                 ]
               }
             }
@@ -1113,10 +1197,12 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "const p=data.find(x=>String(x.orderId)===String(pm.collectionVariables.get(\"kb5OrderId\")));",
-                  "pm.test(\"Payment đúng\",()=>pm.expect(p).to.eql(undefined));"
+                  "pm.test(\"Payment đúng\",()=>pm.expect(p).to.eql(undefined));",
+                  "})();"
                 ]
               }
             }
@@ -1136,12 +1222,14 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "pm.test(\"Đúng thứ tự saga steps\",()=>pm.expect(data.map(x=>x.step)).to.eql([\"CREATE_ORDER\",\"RESERVE_INVENTORY\",\"SAGA\",\"COMPENSATION\",\"CANCEL_ORDER\"]));",
                   "pm.test(\"Log cùng orderId\",()=>pm.expect(data.every(x=>String(x.orderId)===String(pm.collectionVariables.get(\"kb5OrderId\")))).to.eql(true));",
                   "pm.test(\"Time ISO hợp lệ\",()=>pm.expect(data.every(x=>typeof x.time===\"string\"&&!Number.isNaN(Date.parse(x.time)))).to.eql(true));",
-                  "pm.test(\"Có SAGA FAILED và kết thúc CANCEL_ORDER SUCCESS\",()=>{pm.expect(data.find(x=>x.step===\"SAGA\").result).to.eql(\"FAILED\");pm.expect(data[data.length-1].result).to.eql(\"SUCCESS\");});"
+                  "pm.test(\"Có SAGA FAILED và kết thúc CANCEL_ORDER SUCCESS\",()=>{pm.expect(data.find(x=>x.step===\"SAGA\").result).to.eql(\"FAILED\");pm.expect(data[data.length-1].result).to.eql(\"SUCCESS\");});",
+                  "})();"
                 ]
               }
             }
@@ -1167,9 +1255,11 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
-                  "if(Array.isArray(data)) for(const p of data) pm.collectionVariables.set(\"KB7_stock_\"+p.id,p.stock);"
+                  "if(Array.isArray(data)) for(const p of data) pm.collectionVariables.set(\"KB7_stock_\"+p.id,p.stock);",
+                  "})();"
                 ]
               }
             }
@@ -1189,9 +1279,11 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
-                  "if(Array.isArray(data)) for(const w of data) pm.collectionVariables.set(\"KB7_balance_\"+w.customerId,w.balance);"
+                  "if(Array.isArray(data)) for(const w of data) pm.collectionVariables.set(\"KB7_balance_\"+w.customerId,w.balance);",
+                  "})();"
                 ]
               }
             }
@@ -1211,8 +1303,10 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
-                  "pm.test(\"RELEASED\",()=>pm.expect(pm.response.text()).to.eql(\"RELEASED\"));"
+                  "pm.test(\"RELEASED\",()=>pm.expect(pm.response.text()).to.eql(\"RELEASED\"));",
+                  "})();"
                 ]
               }
             }
@@ -1232,10 +1326,12 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "const delta={};",
-                  "for(const id of [\"P1\",\"P2\"]) { const p=Array.isArray(data)&&data.find(x=>x.id===id); const b=Number(pm.collectionVariables.get(\"KB7_stock_\"+id)); pm.test(\"Stock \"+id+\" đúng độ chênh lệch\",()=>pm.expect(p&&p.stock).to.eql(b+(delta[id]||0))); }"
+                  "for(const id of [\"P1\",\"P2\"]) { const p=Array.isArray(data)&&data.find(x=>x.id===id); const b=Number(pm.collectionVariables.get(\"KB7_stock_\"+id)); pm.test(\"Stock \"+id+\" đúng độ chênh lệch\",()=>pm.expect(p&&p.stock).to.eql(b+(delta[id]||0))); }",
+                  "})();"
                 ]
               }
             }
@@ -1255,10 +1351,12 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "const delta={};",
-                  "for(const id of [\"C1\",\"C2\"]) { const w=Array.isArray(data)&&data.find(x=>x.customerId===id); const b=Number(pm.collectionVariables.get(\"KB7_balance_\"+id)); pm.test(\"Balance \"+id+\" đúng độ chênh lệch\",()=>pm.expect(w&&w.balance).to.eql(b+(delta[id]||0))); }"
+                  "for(const id of [\"C1\",\"C2\"]) { const w=Array.isArray(data)&&data.find(x=>x.customerId===id); const b=Number(pm.collectionVariables.get(\"KB7_balance_\"+id)); pm.test(\"Balance \"+id+\" đúng độ chênh lệch\",()=>pm.expect(w&&w.balance).to.eql(b+(delta[id]||0))); }",
+                  "})();"
                 ]
               }
             }
@@ -1278,8 +1376,10 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
-                  "pm.test(\"RELEASED\",()=>pm.expect(pm.response.text()).to.eql(\"RELEASED\"));"
+                  "pm.test(\"RELEASED\",()=>pm.expect(pm.response.text()).to.eql(\"RELEASED\"));",
+                  "})();"
                 ]
               }
             }
@@ -1299,10 +1399,12 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "const delta={};",
-                  "for(const id of [\"P1\",\"P2\"]) { const p=Array.isArray(data)&&data.find(x=>x.id===id); const b=Number(pm.collectionVariables.get(\"KB7_stock_\"+id)); pm.test(\"Stock \"+id+\" đúng độ chênh lệch\",()=>pm.expect(p&&p.stock).to.eql(b+(delta[id]||0))); }"
+                  "for(const id of [\"P1\",\"P2\"]) { const p=Array.isArray(data)&&data.find(x=>x.id===id); const b=Number(pm.collectionVariables.get(\"KB7_stock_\"+id)); pm.test(\"Stock \"+id+\" đúng độ chênh lệch\",()=>pm.expect(p&&p.stock).to.eql(b+(delta[id]||0))); }",
+                  "})();"
                 ]
               }
             }
@@ -1322,10 +1424,12 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "const delta={};",
-                  "for(const id of [\"C1\",\"C2\"]) { const w=Array.isArray(data)&&data.find(x=>x.customerId===id); const b=Number(pm.collectionVariables.get(\"KB7_balance_\"+id)); pm.test(\"Balance \"+id+\" đúng độ chênh lệch\",()=>pm.expect(w&&w.balance).to.eql(b+(delta[id]||0))); }"
+                  "for(const id of [\"C1\",\"C2\"]) { const w=Array.isArray(data)&&data.find(x=>x.customerId===id); const b=Number(pm.collectionVariables.get(\"KB7_balance_\"+id)); pm.test(\"Balance \"+id+\" đúng độ chênh lệch\",()=>pm.expect(w&&w.balance).to.eql(b+(delta[id]||0))); }",
+                  "})();"
                 ]
               }
             }
@@ -1359,8 +1463,10 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
-                  "const r=pm.response.json();pm.test(\"Reservation cũ RESERVED\",()=>{pm.expect(r.status).to.eql(\"RESERVED\");pm.expect(String(r.orderId)).to.eql(String(pm.collectionVariables.get(\"kb1OrderId\")));});"
+                  "const r=pm.response.json();pm.test(\"Reservation cũ RESERVED\",()=>{pm.expect(r.status).to.eql(\"RESERVED\");pm.expect(String(r.orderId)).to.eql(String(pm.collectionVariables.get(\"kb1OrderId\")));});",
+                  "})();"
                 ]
               }
             }
@@ -1380,10 +1486,12 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "const delta={};",
-                  "for(const id of [\"P1\",\"P2\"]) { const p=Array.isArray(data)&&data.find(x=>x.id===id); const b=Number(pm.collectionVariables.get(\"KB7_stock_\"+id)); pm.test(\"Stock \"+id+\" đúng độ chênh lệch\",()=>pm.expect(p&&p.stock).to.eql(b+(delta[id]||0))); }"
+                  "for(const id of [\"P1\",\"P2\"]) { const p=Array.isArray(data)&&data.find(x=>x.id===id); const b=Number(pm.collectionVariables.get(\"KB7_stock_\"+id)); pm.test(\"Stock \"+id+\" đúng độ chênh lệch\",()=>pm.expect(p&&p.stock).to.eql(b+(delta[id]||0))); }",
+                  "})();"
                 ]
               }
             }
@@ -1403,10 +1511,12 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "const delta={};",
-                  "for(const id of [\"C1\",\"C2\"]) { const w=Array.isArray(data)&&data.find(x=>x.customerId===id); const b=Number(pm.collectionVariables.get(\"KB7_balance_\"+id)); pm.test(\"Balance \"+id+\" đúng độ chênh lệch\",()=>pm.expect(w&&w.balance).to.eql(b+(delta[id]||0))); }"
+                  "for(const id of [\"C1\",\"C2\"]) { const w=Array.isArray(data)&&data.find(x=>x.customerId===id); const b=Number(pm.collectionVariables.get(\"KB7_balance_\"+id)); pm.test(\"Balance \"+id+\" đúng độ chênh lệch\",()=>pm.expect(w&&w.balance).to.eql(b+(delta[id]||0))); }",
+                  "})();"
                 ]
               }
             }
@@ -1440,8 +1550,10 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
-                  "const p=pm.response.json();pm.test(\"Payment cũ PAID\",()=>{pm.expect(p.status).to.eql(\"PAID\");pm.expect(String(p.orderId)).to.eql(String(pm.collectionVariables.get(\"kb1OrderId\")));});"
+                  "const p=pm.response.json();pm.test(\"Payment cũ PAID\",()=>{pm.expect(p.status).to.eql(\"PAID\");pm.expect(String(p.orderId)).to.eql(String(pm.collectionVariables.get(\"kb1OrderId\")));});",
+                  "})();"
                 ]
               }
             }
@@ -1461,10 +1573,12 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "const delta={};",
-                  "for(const id of [\"P1\",\"P2\"]) { const p=Array.isArray(data)&&data.find(x=>x.id===id); const b=Number(pm.collectionVariables.get(\"KB7_stock_\"+id)); pm.test(\"Stock \"+id+\" đúng độ chênh lệch\",()=>pm.expect(p&&p.stock).to.eql(b+(delta[id]||0))); }"
+                  "for(const id of [\"P1\",\"P2\"]) { const p=Array.isArray(data)&&data.find(x=>x.id===id); const b=Number(pm.collectionVariables.get(\"KB7_stock_\"+id)); pm.test(\"Stock \"+id+\" đúng độ chênh lệch\",()=>pm.expect(p&&p.stock).to.eql(b+(delta[id]||0))); }",
+                  "})();"
                 ]
               }
             }
@@ -1484,10 +1598,12 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "const delta={};",
-                  "for(const id of [\"C1\",\"C2\"]) { const w=Array.isArray(data)&&data.find(x=>x.customerId===id); const b=Number(pm.collectionVariables.get(\"KB7_balance_\"+id)); pm.test(\"Balance \"+id+\" đúng độ chênh lệch\",()=>pm.expect(w&&w.balance).to.eql(b+(delta[id]||0))); }"
+                  "for(const id of [\"C1\",\"C2\"]) { const w=Array.isArray(data)&&data.find(x=>x.customerId===id); const b=Number(pm.collectionVariables.get(\"KB7_balance_\"+id)); pm.test(\"Balance \"+id+\" đúng độ chênh lệch\",()=>pm.expect(w&&w.balance).to.eql(b+(delta[id]||0))); }",
+                  "})();"
                 ]
               }
             }
@@ -1507,8 +1623,10 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
-                  "pm.test(\"REFUNDED\",()=>pm.expect(pm.response.text()).to.eql(\"REFUNDED\"));"
+                  "pm.test(\"REFUNDED\",()=>pm.expect(pm.response.text()).to.eql(\"REFUNDED\"));",
+                  "})();"
                 ]
               }
             }
@@ -1528,10 +1646,12 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "const delta={};",
-                  "for(const id of [\"P1\",\"P2\"]) { const p=Array.isArray(data)&&data.find(x=>x.id===id); const b=Number(pm.collectionVariables.get(\"KB7_stock_\"+id)); pm.test(\"Stock \"+id+\" đúng độ chênh lệch\",()=>pm.expect(p&&p.stock).to.eql(b+(delta[id]||0))); }"
+                  "for(const id of [\"P1\",\"P2\"]) { const p=Array.isArray(data)&&data.find(x=>x.id===id); const b=Number(pm.collectionVariables.get(\"KB7_stock_\"+id)); pm.test(\"Stock \"+id+\" đúng độ chênh lệch\",()=>pm.expect(p&&p.stock).to.eql(b+(delta[id]||0))); }",
+                  "})();"
                 ]
               }
             }
@@ -1551,10 +1671,12 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
+                  "(() => {",
                   "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                   "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                   "const delta={};",
-                  "for(const id of [\"C1\",\"C2\"]) { const w=Array.isArray(data)&&data.find(x=>x.customerId===id); const b=Number(pm.collectionVariables.get(\"KB7_balance_\"+id)); pm.test(\"Balance \"+id+\" đúng độ chênh lệch\",()=>pm.expect(w&&w.balance).to.eql(b+(delta[id]||0))); }"
+                  "for(const id of [\"C1\",\"C2\"]) { const w=Array.isArray(data)&&data.find(x=>x.customerId===id); const b=Number(pm.collectionVariables.get(\"KB7_balance_\"+id)); pm.test(\"Balance \"+id+\" đúng độ chênh lệch\",()=>pm.expect(w&&w.balance).to.eql(b+(delta[id]||0))); }",
+                  "})();"
                 ]
               }
             }
@@ -1583,9 +1705,11 @@
                   "script": {
                     "type": "text/javascript",
                     "exec": [
+                      "(() => {",
                       "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                       "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
-                      "if(Array.isArray(data)) for(const p of data) pm.collectionVariables.set(\"KB6_stock_\"+p.id,p.stock);"
+                      "if(Array.isArray(data)) for(const p of data) pm.collectionVariables.set(\"KB6_stock_\"+p.id,p.stock);",
+                      "})();"
                     ]
                   }
                 }
@@ -1605,9 +1729,11 @@
                   "script": {
                     "type": "text/javascript",
                     "exec": [
+                      "(() => {",
                       "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                       "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
-                      "if(Array.isArray(data)) for(const w of data) pm.collectionVariables.set(\"KB6_balance_\"+w.customerId,w.balance);"
+                      "if(Array.isArray(data)) for(const w of data) pm.collectionVariables.set(\"KB6_balance_\"+w.customerId,w.balance);",
+                      "})();"
                     ]
                   }
                 }
@@ -1641,12 +1767,14 @@
                   "script": {
                     "type": "text/javascript",
                     "exec": [
+                      "(() => {",
                       "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                       "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                       "if(data&&data.id) pm.collectionVariables.set(\"kb6OrderId\",data.id);",
                       "pm.test(\"Order status đúng\",()=>pm.expect(data.status).to.eql(\"CANCELLED\"));",
                       "pm.test(\"Saga status đúng\",()=>pm.expect(data.sagaStatus).to.eql(\"COMPENSATED\"));",
-                      "pm.test(\"Failure reason đúng\",()=>pm.expect(data.failureReason).to.match(/^Service không phản hồi/));"
+                      "pm.test(\"Failure reason đúng\",()=>pm.expect(data.failureReason).to.match(/^Service không phản hồi/));",
+                      "})();"
                     ]
                   }
                 }
@@ -1666,10 +1794,12 @@
                   "script": {
                     "type": "text/javascript",
                     "exec": [
+                      "(() => {",
                       "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                       "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                       "const delta={};",
-                      "for(const id of [\"P1\",\"P2\"]) { const p=Array.isArray(data)&&data.find(x=>x.id===id); const b=Number(pm.collectionVariables.get(\"KB6_stock_\"+id)); pm.test(\"Stock \"+id+\" đúng độ chênh lệch\",()=>pm.expect(p&&p.stock).to.eql(b+(delta[id]||0))); }"
+                      "for(const id of [\"P1\",\"P2\"]) { const p=Array.isArray(data)&&data.find(x=>x.id===id); const b=Number(pm.collectionVariables.get(\"KB6_stock_\"+id)); pm.test(\"Stock \"+id+\" đúng độ chênh lệch\",()=>pm.expect(p&&p.stock).to.eql(b+(delta[id]||0))); }",
+                      "})();"
                     ]
                   }
                 }
@@ -1689,10 +1819,12 @@
                   "script": {
                     "type": "text/javascript",
                     "exec": [
+                      "(() => {",
                       "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                       "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                       "const delta={};",
-                      "for(const id of [\"C1\",\"C2\"]) { const w=Array.isArray(data)&&data.find(x=>x.customerId===id); const b=Number(pm.collectionVariables.get(\"KB6_balance_\"+id)); pm.test(\"Balance \"+id+\" đúng độ chênh lệch\",()=>pm.expect(w&&w.balance).to.eql(b+(delta[id]||0))); }"
+                      "for(const id of [\"C1\",\"C2\"]) { const w=Array.isArray(data)&&data.find(x=>x.customerId===id); const b=Number(pm.collectionVariables.get(\"KB6_balance_\"+id)); pm.test(\"Balance \"+id+\" đúng độ chênh lệch\",()=>pm.expect(w&&w.balance).to.eql(b+(delta[id]||0))); }",
+                      "})();"
                     ]
                   }
                 }
@@ -1712,10 +1844,12 @@
                   "script": {
                     "type": "text/javascript",
                     "exec": [
+                      "(() => {",
                       "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                       "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                       "const r=data.find(x=>String(x.orderId)===String(pm.collectionVariables.get(\"kb6OrderId\")));",
-                      "pm.test(\"Reservation đúng\",()=>pm.expect(r&&r.status).to.eql(\"RELEASED\"));"
+                      "pm.test(\"Reservation đúng\",()=>pm.expect(r&&r.status).to.eql(\"RELEASED\"));",
+                      "})();"
                     ]
                   }
                 }
@@ -1735,10 +1869,12 @@
                   "script": {
                     "type": "text/javascript",
                     "exec": [
+                      "(() => {",
                       "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                       "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                       "const p=data.find(x=>String(x.orderId)===String(pm.collectionVariables.get(\"kb6OrderId\")));",
-                      "pm.test(\"Payment đúng\",()=>pm.expect(p).to.eql(undefined));"
+                      "pm.test(\"Payment đúng\",()=>pm.expect(p).to.eql(undefined));",
+                      "})();"
                     ]
                   }
                 }
@@ -1758,12 +1894,14 @@
                   "script": {
                     "type": "text/javascript",
                     "exec": [
+                      "(() => {",
                       "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                       "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                       "pm.test(\"Đúng thứ tự saga steps\",()=>pm.expect(data.map(x=>x.step)).to.eql([\"CREATE_ORDER\",\"RESERVE_INVENTORY\",\"SAGA\",\"COMPENSATION\",\"CANCEL_ORDER\"]));",
                       "pm.test(\"Log cùng orderId\",()=>pm.expect(data.every(x=>String(x.orderId)===String(pm.collectionVariables.get(\"kb6OrderId\")))).to.eql(true));",
                       "pm.test(\"Time ISO hợp lệ\",()=>pm.expect(data.every(x=>typeof x.time===\"string\"&&!Number.isNaN(Date.parse(x.time)))).to.eql(true));",
-                      "pm.test(\"Có SAGA FAILED và kết thúc CANCEL_ORDER SUCCESS\",()=>{pm.expect(data.find(x=>x.step===\"SAGA\").result).to.eql(\"FAILED\");pm.expect(data[data.length-1].result).to.eql(\"SUCCESS\");});"
+                      "pm.test(\"Có SAGA FAILED và kết thúc CANCEL_ORDER SUCCESS\",()=>{pm.expect(data.find(x=>x.step===\"SAGA\").result).to.eql(\"FAILED\");pm.expect(data[data.length-1].result).to.eql(\"SUCCESS\");});",
+                      "})();"
                     ]
                   }
                 }
@@ -1789,9 +1927,11 @@
                   "script": {
                     "type": "text/javascript",
                     "exec": [
+                      "(() => {",
                       "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                       "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
-                      "if(Array.isArray(data)) for(const p of data) pm.collectionVariables.set(\"KB8_stock_\"+p.id,p.stock);"
+                      "if(Array.isArray(data)) for(const p of data) pm.collectionVariables.set(\"KB8_stock_\"+p.id,p.stock);",
+                      "})();"
                     ]
                   }
                 }
@@ -1811,9 +1951,11 @@
                   "script": {
                     "type": "text/javascript",
                     "exec": [
+                      "(() => {",
                       "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                       "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
-                      "if(Array.isArray(data)) for(const w of data) pm.collectionVariables.set(\"KB8_balance_\"+w.customerId,w.balance);"
+                      "if(Array.isArray(data)) for(const w of data) pm.collectionVariables.set(\"KB8_balance_\"+w.customerId,w.balance);",
+                      "})();"
                     ]
                   }
                 }
@@ -1847,8 +1989,10 @@
                   "script": {
                     "type": "text/javascript",
                     "exec": [
+                      "(() => {",
                       "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
-                      "const o=pm.response.json();pm.collectionVariables.set(\"kb8OrderId\",o.id);pm.test(\"Order PENDING\",()=>pm.expect(o.status).to.eql(\"PENDING\"));pm.test(\"Saga COMPENSATING\",()=>pm.expect(o.sagaStatus).to.eql(\"COMPENSATING\"));pm.test(\"Network failure\",()=>pm.expect(o.failureReason).to.match(/^Service không phản hồi/));"
+                      "const o=pm.response.json();pm.collectionVariables.set(\"kb8OrderId\",o.id);pm.test(\"Order PENDING\",()=>pm.expect(o.status).to.eql(\"PENDING\"));pm.test(\"Saga COMPENSATING\",()=>pm.expect(o.sagaStatus).to.eql(\"COMPENSATING\"));pm.test(\"Network failure\",()=>pm.expect(o.failureReason).to.match(/^Service không phản hồi/));",
+                      "})();"
                     ]
                   }
                 }
@@ -1868,8 +2012,10 @@
                   "script": {
                     "type": "text/javascript",
                     "exec": [
+                      "(() => {",
                       "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
-                      "const logs=pm.response.json();pm.test(\"3 compensation failures\",()=>pm.expect(logs.filter(x=>x.step===\"COMPENSATION\"&&x.result===\"FAILED\")).length(3));pm.test(\"Không cancel order\",()=>pm.expect(logs.some(x=>x.step===\"CANCEL_ORDER\")).to.eql(false));"
+                      "const logs=pm.response.json();pm.test(\"3 compensation failures\",()=>pm.expect(logs.filter(x=>x.step===\"COMPENSATION\"&&x.result===\"FAILED\")).length(3));pm.test(\"Không cancel order\",()=>pm.expect(logs.some(x=>x.step===\"CANCEL_ORDER\")).to.eql(false));",
+                      "})();"
                     ]
                   }
                 }
@@ -1889,10 +2035,12 @@
                   "script": {
                     "type": "text/javascript",
                     "exec": [
+                      "(() => {",
                       "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                       "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                       "const delta={\"P2\":-1};",
-                      "for(const id of [\"P1\",\"P2\"]) { const p=Array.isArray(data)&&data.find(x=>x.id===id); const b=Number(pm.collectionVariables.get(\"KB8_stock_\"+id)); pm.test(\"Stock \"+id+\" đúng độ chênh lệch\",()=>pm.expect(p&&p.stock).to.eql(b+(delta[id]||0))); }"
+                      "for(const id of [\"P1\",\"P2\"]) { const p=Array.isArray(data)&&data.find(x=>x.id===id); const b=Number(pm.collectionVariables.get(\"KB8_stock_\"+id)); pm.test(\"Stock \"+id+\" đúng độ chênh lệch\",()=>pm.expect(p&&p.stock).to.eql(b+(delta[id]||0))); }",
+                      "})();"
                     ]
                   }
                 }
@@ -1912,10 +2060,12 @@
                   "script": {
                     "type": "text/javascript",
                     "exec": [
+                      "(() => {",
                       "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                       "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                       "const delta={};",
-                      "for(const id of [\"C1\",\"C2\"]) { const w=Array.isArray(data)&&data.find(x=>x.customerId===id); const b=Number(pm.collectionVariables.get(\"KB8_balance_\"+id)); pm.test(\"Balance \"+id+\" đúng độ chênh lệch\",()=>pm.expect(w&&w.balance).to.eql(b+(delta[id]||0))); }"
+                      "for(const id of [\"C1\",\"C2\"]) { const w=Array.isArray(data)&&data.find(x=>x.customerId===id); const b=Number(pm.collectionVariables.get(\"KB8_balance_\"+id)); pm.test(\"Balance \"+id+\" đúng độ chênh lệch\",()=>pm.expect(w&&w.balance).to.eql(b+(delta[id]||0))); }",
+                      "})();"
                     ]
                   }
                 }
@@ -1935,8 +2085,10 @@
                   "script": {
                     "type": "text/javascript",
                     "exec": [
+                      "(() => {",
                       "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
-                      "pm.test(\"RELEASED\",()=>pm.expect(pm.response.text()).to.eql(\"RELEASED\"));"
+                      "pm.test(\"RELEASED\",()=>pm.expect(pm.response.text()).to.eql(\"RELEASED\"));",
+                      "})();"
                     ]
                   }
                 }
@@ -1956,10 +2108,12 @@
                   "script": {
                     "type": "text/javascript",
                     "exec": [
+                      "(() => {",
                       "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                       "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                       "const delta={};",
-                      "for(const id of [\"P1\",\"P2\"]) { const p=Array.isArray(data)&&data.find(x=>x.id===id); const b=Number(pm.collectionVariables.get(\"KB8_stock_\"+id)); pm.test(\"Stock \"+id+\" đúng độ chênh lệch\",()=>pm.expect(p&&p.stock).to.eql(b+(delta[id]||0))); }"
+                      "for(const id of [\"P1\",\"P2\"]) { const p=Array.isArray(data)&&data.find(x=>x.id===id); const b=Number(pm.collectionVariables.get(\"KB8_stock_\"+id)); pm.test(\"Stock \"+id+\" đúng độ chênh lệch\",()=>pm.expect(p&&p.stock).to.eql(b+(delta[id]||0))); }",
+                      "})();"
                     ]
                   }
                 }
@@ -1979,10 +2133,12 @@
                   "script": {
                     "type": "text/javascript",
                     "exec": [
+                      "(() => {",
                       "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
                       "let data; try { data=pm.response.json(); } catch(e) { pm.test(\"JSON hợp lệ\",()=>{throw e;}); }",
                       "const delta={};",
-                      "for(const id of [\"C1\",\"C2\"]) { const w=Array.isArray(data)&&data.find(x=>x.customerId===id); const b=Number(pm.collectionVariables.get(\"KB8_balance_\"+id)); pm.test(\"Balance \"+id+\" đúng độ chênh lệch\",()=>pm.expect(w&&w.balance).to.eql(b+(delta[id]||0))); }"
+                      "for(const id of [\"C1\",\"C2\"]) { const w=Array.isArray(data)&&data.find(x=>x.customerId===id); const b=Number(pm.collectionVariables.get(\"KB8_balance_\"+id)); pm.test(\"Balance \"+id+\" đúng độ chênh lệch\",()=>pm.expect(w&&w.balance).to.eql(b+(delta[id]||0))); }",
+                      "})();"
                     ]
                   }
                 }

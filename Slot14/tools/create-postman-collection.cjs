@@ -1,7 +1,7 @@
 const fs=require('node:fs');
 const path=require('node:path');
 const root=path.resolve(__dirname,'..');
-const test = code => ({listen:'test',script:{type:'text/javascript',exec:code.split('\n')}});
+const test = code => ({listen:'test',script:{type:'text/javascript',exec:['(() => {',...code.split('\n'), '})();']}});
 const ok='pm.test("HTTP 200",()=>pm.response.to.have.status(200));';
 const json='let data; try { data=pm.response.json(); } catch(e) { pm.test("JSON hợp lệ",()=>{throw e;}); }';
 function req(name,method,url,body,script,description='') {
