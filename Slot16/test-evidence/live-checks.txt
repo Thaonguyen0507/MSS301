@@ -1,0 +1,81 @@
+Create user: 201/1
+Duplicate username: 226/3
+User validation username= : 406/2
+User validation username=aaaaaaaaaaaaaaaaaaaa: 406/2
+User validation email=invalid: 406/2
+User validation email=: 406/2
+User validation email=aaaaaaaaaaaaaaaaaaaa: 406/2
+User validation role=WRONG: 406/2
+User validation ratePerPost=0: 406/2
+User validation ratePerPost=-1: 406/2
+User validation ratePerPost=10000000000000000: 406/2
+User validation maxDailyPosts=0: 406/2
+User validation maxDailyPosts=11: 406/2
+User validation level=0: 406/2
+User validation status=WRONG: 406/2
+Missing user fields: 406/2
+Malformed JSON: 406/2
+Partial user update: 200/1
+Invalid partial user update: 406/2
+Duplicate username on update: 226/3
+Missing user update: 404/4
+User detail: 200/1
+Missing user detail: 404/4
+Invalid user id: 406/2
+User filters and pagination: 200/1
+Invalid user filter size=101: 406/2
+Invalid user filter size=0: 406/2
+Invalid user filter page=-1: 406/2
+Invalid user filter role=WRONG: 406/2
+Invalid user filter status=WRONG: 406/2
+Invalid user filter size=abc: 406/2
+User default page: 200/1
+Create post through Feign: 201/1
+Post validation advertiserName= : 406/2
+Post validation advertiserName=aaaaaaaaaaaaaaaaaaaa: 406/2
+Post validation advertiserEmail=invalid: 406/2
+Post validation advertiserEmail=: 406/2
+Post validation advertiserPhone= : 406/2
+Post validation advertiserPhone=11111111111111111111: 406/2
+Post validation startDate=31/02/2026: 406/2
+Post validation startDate=2026-07-25: 406/2
+Post validation endDate=25/07/2026: 406/2
+Post validation endDate=24/07/2026: 406/2
+Post validation numberOfPosts=0: 406/2
+Post validation numberOfPosts=4: 406/2
+Post validation status=WRONG: 406/2
+Missing post fields: 406/2
+Feign missing user: 404/4
+Inactive user create: 400/5
+Post detail embeds user: 200/1
+Change creator rate: 200/1
+Partial post recalculates current rate: 200/1
+Invalid partial dates: 406/2
+Rejected update preserves DB: 200/1
+Invalid partial capacity: 406/2
+Missing changed user: 404/4
+Changed user capacity: 406/2
+Change user and quantity: 200/1
+Post filters and pagination: 200/1
+Invalid post filter size=101: 406/2
+Invalid post filter size=0: 406/2
+Invalid post filter page=-1: 406/2
+Invalid post filter status=WRONG: 406/2
+Missing post detail: 404/4
+Missing post update: 404/4
+Cancel post: 200/1
+Cancellation persisted: 200/1
+Missing post delete: 404/4
+Deactivate user: 200/1
+Deactivation persisted: 200/1
+Deactivated user cannot book: 400/5
+Missing user delete: 404/4
+Swagger UI, OpenAPI, CORS port 8080: PASS
+Swagger UI, OpenAPI, CORS port 8081: PASS
+Swagger UI, OpenAPI, CORS port 8082: PASS
+CORS preflight /api/users: PASS
+CORS preflight /api/posts: PASS
+Gateway Swagger has both service definitions: PASS
+Existing campaign can be updated for an inactive user: 200/1
+Existing campaign partial update for suspended user recalculates current rate: 200/1
+UserService unavailable maps to HTTP 500 / status 0: PASS
