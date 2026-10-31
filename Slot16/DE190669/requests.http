@@ -1,0 +1,68 @@
+@base = http://localhost:8080
+
+### List active creators
+GET {{base}}/api/users?role=CREATOR&status=ACTIVE&page=0&size=10
+Accept: application/json
+
+### Create user
+POST {{base}}/api/users
+Content-Type: application/json
+
+{
+  "username": "creator_test1",
+  "email": "test1@example.com",
+  "role": "CREATOR",
+  "ratePerPost": 500000,
+  "maxDailyPosts": 3,
+  "level": 1
+}
+
+### Set userId from response
+@userId = 1
+
+### Partial user update
+PUT {{base}}/api/users/{{userId}}
+Content-Type: application/json
+
+{"email": "changed@example.com"}
+
+### Create campaign with an ACTIVE user
+POST {{base}}/api/posts
+Content-Type: application/json
+
+{
+  "advertiserName": "Shop ABC",
+  "advertiserEmail": "ads@example.com",
+  "advertiserPhone": "0900000000",
+  "startDate": "25/07/2026",
+  "endDate": "28/07/2026",
+  "numberOfPosts": 2,
+  "userId": {{userId}}
+}
+
+### Set postId from response
+@postId = 1
+
+### Detail embeds user object
+GET {{base}}/api/posts/{{postId}}
+
+### Partial update recalculates price
+PUT {{base}}/api/posts/{{postId}}
+Content-Type: application/json
+
+{"endDate": "27/07/2026"}
+
+### Filter and paginate
+GET {{base}}/api/posts?advertiserName=Shop&status=SCHEDULED&page=0&size=10
+
+### Validation must return HTTP 406 / status 2
+PUT {{base}}/api/posts/{{postId}}
+Content-Type: application/json
+
+{"endDate": "25/07/2026"}
+
+### Cancel campaign
+DELETE {{base}}/api/posts/{{postId}}
+
+### Deactivate user
+DELETE {{base}}/api/users/{{userId}}

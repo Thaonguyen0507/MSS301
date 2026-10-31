@@ -1,0 +1,6 @@
+**/target/
+*.log
+*.zip
+.idea/
+*.iml
+test-results/
