@@ -444,6 +444,328 @@
           ]
         }
       ]
+    },
+    {
+      "name": "MSBrand - TODO5",
+      "item": [
+        {
+          "name": "01 clear test link 99",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{brandUrl}}/internal/brands/watches/99"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "02 verify seed counts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{brandUrl}}/api/brands"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"Seeded brand counts\", function () { const brands=pm.response.json().data; pm.expect(brands).to.have.lengthOf(5); const expected={Rolex:2,Omega:2,Seiko:2,Casio:3,'TAG Heuer':1}; brands.forEach(b=>pm.expect(b.watchCount,b.brandName).to.eql(expected[b.brandName])); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "03 get Rolex",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{brandUrl}}/api/brands/1"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"Rolex details\", function () { const b=pm.response.json().data; pm.expect(b.brandId).to.eql(1); pm.expect(b.brandName).to.eql('Rolex'); pm.expect(b.countryOfOrigin).to.eql('Switzerland'); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "04 get Rolex watches",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{brandUrl}}/api/brands/1/watches"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"Expected watch IDs\", function () { pm.expect(pm.response.json().data.watchIds).to.eql([1,8]); pm.expect(pm.response.json().data.watchCount).to.eql(2); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "05 assign watch 99",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": "{{brandUrl}}/internal/brands/1/watches/99"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"ASSIGNED\", function () { pm.expect(pm.response.json().data.status).to.eql('ASSIGNED'); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "06 repeat same assignment",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": "{{brandUrl}}/internal/brands/1/watches/99"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"ASSIGNED\", function () { pm.expect(pm.response.json().data.status).to.eql('ASSIGNED'); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "07 verify no duplicate watch",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{brandUrl}}/api/brands/1/watches"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"Expected watch IDs\", function () { pm.expect(pm.response.json().data.watchIds).to.eql([1,8,99]); pm.expect(pm.response.json().data.watchCount).to.eql(3); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "08 move watch to Omega",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": "{{brandUrl}}/internal/brands/2/watches/99"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"Previous brand preserved\", function () { const r=pm.response.json().data; pm.expect(r.brandId).to.eql(2); pm.expect(r.previousBrandId).to.eql(1); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "09 verify old brand cleared",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{brandUrl}}/api/brands/1/watches"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"Expected watch IDs\", function () { pm.expect(pm.response.json().data.watchIds).to.eql([1,8]); pm.expect(pm.response.json().data.watchCount).to.eql(2); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "10 reject unknown brand",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": "{{brandUrl}}/internal/brands/999/watches/99"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 404\", function () { pm.response.to.have.status(404); });",
+                  "pm.test(\"ApiResponse error\", function () { pm.expect(pm.response.json()).to.eql({success:false,message:'Brand not found with id: 999'}); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "11 failed assignment preserves link",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{brandUrl}}/api/brands/2/watches"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"Expected watch IDs\", function () { pm.expect(pm.response.json().data.watchIds).to.eql([2,6,99]); pm.expect(pm.response.json().data.watchCount).to.eql(3); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "12 unassign watch 99",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{brandUrl}}/internal/brands/watches/99"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"UNASSIGNED\", function () { pm.expect(pm.response.json().data.status).to.eql('UNASSIGNED'); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "13 repeat unassign",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{brandUrl}}/internal/brands/watches/99"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"NOTHING_TO_DO\", function () { pm.expect(pm.response.json().data.status).to.eql('NOTHING_TO_DO'); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "14 reject unknown brand query",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{brandUrl}}/api/brands/999"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 404\", function () { pm.response.to.have.status(404); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "15 reject unknown brand watches",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{brandUrl}}/api/brands/999/watches"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 404\", function () { pm.response.to.have.status(404); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "16 verify counts restored",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{brandUrl}}/api/brands"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"Seeded brand counts\", function () { const brands=pm.response.json().data; pm.expect(brands).to.have.lengthOf(5); const expected={Rolex:2,Omega:2,Seiko:2,Casio:3,'TAG Heuer':1}; brands.forEach(b=>pm.expect(b.watchCount,b.brandName).to.eql(expected[b.brandName])); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
     }
   ]
 }
