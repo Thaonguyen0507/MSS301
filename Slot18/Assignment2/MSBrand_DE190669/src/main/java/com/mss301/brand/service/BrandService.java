@@ -1,7 +1,10 @@
 package com.mss301.brand.service;
 
 import com.mss301.brand.dto.AssignmentResponse;
+import com.mss301.brand.dto.BrandResponse;
+import com.mss301.brand.dto.BrandWatchesResponse;
 import com.mss301.brand.entity.BrandWatch;
+import com.mss301.brand.entity.WatchBrand;
 import com.mss301.brand.repository.BrandRepository;
 import com.mss301.brand.repository.BrandWatchRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +23,21 @@ import java.time.LocalDateTime;
 public class BrandService {
     private final BrandRepository brandRepository;
     private final BrandWatchRepository brandWatchRepository;
+
+    public List<BrandResponse> findAll() {
+        return brandRepository.findAll().stream().map(this::toResponse).toList();
+    }
+
+    public BrandResponse findById(Integer id) {
+        return toResponse(getBrand(id));
+    }
+
+    public BrandWatchesResponse watchesOf(Integer brandId) {
+        WatchBrand brand = getBrand(brandId);
+        List<Integer> watchIds = brandWatchRepository.findByBrandIdOrderByWatchIdAsc(brandId).stream()
+            .map(BrandWatch::getWatchId).toList();
+        return new BrandWatchesResponse(brandId, brand.getBrandName(), watchIds.size(), watchIds);
+    }
 
     @Transactional
     public AssignmentResponse assignWatch(Integer brandId, Integer watchId) {
@@ -47,5 +66,15 @@ public class BrandService {
         brandWatchRepository.delete(existing.get());
         log.info("[SAGA-PARTICIPANT] UNASSIGN watch={} from brand={}", watchId, previous);
         return new AssignmentResponse(watchId, null, previous, "UNASSIGNED");
+    }
+
+    private WatchBrand getBrand(Integer id) {
+        return brandRepository.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Brand not found with id: " + id));
+    }
+
+    private BrandResponse toResponse(WatchBrand brand) {
+        return new BrandResponse(brand.getBrandId(), brand.getBrandName(), brand.getCountryOfOrigin(),
+            brandWatchRepository.countByBrandId(brand.getBrandId()));
     }
 }
