@@ -1,0 +1,8 @@
+# <type>(<scope>): <subject>
+# English, imperative, lowercase, no final period, <= 50 characters.
+# type: feat | fix | build | docs | test | chore | refactor
+# scope: ms-account | ms-brand | ms-watch | gateway | config | postman
+
+# Explain why when needed; wrap body lines at 72 characters.
+
+# Refs: TODO-x.y
