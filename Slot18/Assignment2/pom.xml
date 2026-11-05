@@ -9,5 +9,6 @@
         <module>MSAccount_DE190669</module>
         <module>MSBrand_DE190669</module>
         <module>MSWatch_DE190669</module>
+        <module>APIGateway_DE190669</module>
     </modules>
 </project>
